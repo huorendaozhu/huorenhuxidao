@@ -20,3 +20,46 @@ a {
 button {
     cursor: pointer;
 }
+/* 全站统一导航栏 */
+
+header {
+    padding: 24px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+header h2 {
+    margin: 0;
+    white-space: nowrap;
+}
+
+header nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 18px;
+}
+
+header nav a {
+    color: #526b58;
+    text-decoration: none;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* 手机和平板适配 */
+
+@media (max-width: 850px) {
+    header {
+        flex-wrap: wrap;
+        padding: 20px 6%;
+    }
+
+    header nav {
+        justify-content: flex-start;
+        gap: 14px 18px;
+    }
+}
