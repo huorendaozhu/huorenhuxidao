@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI工具岛｜活人呼吸岛</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .intro {
+      background: #e6eee5;
+      padding: 40px;
+      border-radius: 22px;
+      margin-bottom: 35px;
+    }
+
+    .intro h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .intro p {
+      line-height: 2;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 15px 18px;
+      border: 1px solid #dce5d9;
+      border-radius: 12px;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .tool-card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid #edf0e9;
+    }
+
+    .tool-card p {
+      color: #718074;
+      line-height: 1.8;
+    }
+
+    .tool-card a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #52745b;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 35px;
+      color: #52745b;
+      text-decoration: none;
+    }
+
+    @media (max-width: 650px) {
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        padding: 25px;
+      }
+
+      .intro h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h2>🌿 活人呼吸岛</h2>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="explore.html">探索岛屿</a>
+      <a href="discussion.html">岛民讨论</a>
+      <a href="ai-tools.html">AI工具</a>
+      <a href="lab.html">创意实验室</a>
+      <a href="about.html">关于岛屿</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <section class="intro">
+      <p>DISCOVER AI</p>
+      <h1>AI 工具岛</h1>
+      <p>
+        让人工智能成为探索世界、提高效率和创造价值的帮手。
+        不必追逐所有工具，找到适合自己的就好。
+      </p>
+    </section>
+
+    <section>
+      <h2>寻找你需要的 AI 工具</h2>
+
+      <input
+        class="search-box"
+        type="text"
+        id="toolSearch"
+        placeholder="输入工具名称或用途，例如：写作、绘图、办公……"
+        oninput="searchTools()"
+      >
+
+      <div class="tools-grid" id="toolsGrid">
+
+        <div class="tool-card">
+          <h3>🤖 ChatGPT</h3>
+          <p>通用 AI 助手，适合思考、写作、分析、学习与创作。</p>
+          <a href="https://chatgpt.com/" target="_blank">访问工具 →</a>
+        </div>
+
+        <div class="tool-card">
+          <h3>🌙 Kimi</h3>
+          <p>适合长文本阅读、资料整理、研究与信息分析。</p>
+          <a href="https://www.kimi.com/" target="_blank">访问工具 →</a>
+        </div>
+
+        <div class="tool-card">
+          <h3>🌱 豆包</h3>
+          <p>适合日常问答、内容创作、语音交流和多模态体验。</p>
+          <a href="豆包" target="_blank">访问工具 →</a>
+        </div>
+
+        <div class="tool-card">
+          <h3>🧠 DeepSeek</h3>
+          <p>适合逻辑推理、知识问答、代码辅助和复杂问题分析。</p>
+          <a href="https://www.deepseek.com/" target="_blank">访问工具 →</a>
+        </div>
+
+        <div class="tool-card">
+          <h3>🎨 即梦 AI</h3>
+          <p>探索 AI 图像生成与视频创作。</p>
+          <a href="https://jimeng.jianying.com/" target="_blank">访问工具 →</a>
+        </div>
+
+        <div class="tool-card">
+          <h3>📊 通义千问</h3>
+          <p>适合知识问答、办公辅助、代码和多种 AI 应用。</p>
+          <a href="https://www.tongyi.com/" target="_blank">访问工具 →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <a class="back" href="index.html">← 返回首页</a>
+
+  </main>
+
+  <footer>
+    善用工具，但不要忘记自己的创造力。
+    <br><br>
+    © 2026 活人呼吸岛
+  </footer>
+
+  <script>
+    function searchTools() {
+      const keyword = document
+        .getElementById("toolSearch")
+        .value
+        .toLowerCase();
+
+      const cards = document.querySelectorAll(".tool-card");
+
+      cards.forEach(card => {
+        const content = card.innerText.toLowerCase();
+
+        card.style.display = content.includes(keyword)
+          ? "block"
+          : "none";
+      });
+    }
+  </script>
+
+</body>
+</html>
