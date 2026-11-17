@@ -1,1 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>探索岛屿｜活人呼吸岛</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
 
+    .intro {
+      background: #e6eee5;
+      padding: 40px;
+      border-radius: 22px;
+      margin-bottom: 35px;
+    }
+
+    .intro h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .intro p {
+      line-height: 2;
+    }
+
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .explore-card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid #edf0e9;
+    }
+
+    .explore-card h3 {
+      margin-top: 0;
+    }
+
+    .explore-card p {
+      color: #718074;
+      line-height: 1.8;
+    }
+
+    .explore-card a {
+      color: #52745b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 35px;
+      color: #52745b;
+      text-decoration: none;
+    }
+
+    @media (max-width: 650px) {
+      .explore-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        padding: 25px;
+      }
+
+      .intro h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h2>🌿 活人呼吸岛</h2>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="explore.html">探索岛屿</a>
+      <a href="discussion.html">岛民讨论</a>
+      <a href="ai-tools.html">AI工具</a>
+      <a href="lab.html">创意实验室</a>
+      <a href="about.html">关于岛屿</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <section class="intro">
+      <p>EXPLORE THE WORLD</p>
+      <h1>探索岛屿</h1>
+      <p>
+        世界很大，生活也有很多种可能。
+        在这里，我们分享知识、发现新事物，
+        也记录那些值得思考的小小瞬间。
+      </p>
+    </section>
+
+    <section>
+      <h2>岛上的探索路线</h2>
+
+      <div class="explore-grid">
+
+        <div class="explore-card">
+          <h3>🌍 世界观察</h3>
+          <p>关注社会、科技、商业和世界正在发生的变化。</p>
+          <a href="#">开始探索 →</a>
+        </div>
+
+        <div class="explore-card">
+          <h3>🧠 知识补给</h3>
+          <p>学习新知识，理解复杂事物，拓展认知边界。</p>
+          <a href="#">开始学习 →</a>
+        </div>
+
+        <div class="explore-card">
+          <h3>💡 灵感收集</h3>
+          <p>记录有趣的想法、生活观察和突然出现的灵感。</p>
+          <a href="#">寻找灵感 →</a>
+        </div>
+
+        <div class="explore-card">
+          <h3>🤖 科技前沿</h3>
+          <p>探索人工智能、新技术和未来生活的可能性。</p>
+          <a href="#">了解科技 →</a>
+        </div>
+
+        <div class="explore-card">
+          <h3>🎨 艺术与创造</h3>
+          <p>发现艺术、设计、音乐和各种有趣的创造方式。</p>
+          <a href="#">发现美好 →</a>
+        </div>
+
+        <div class="explore-card">
+          <h3>🌱 生活实验</h3>
+          <p>尝试新的生活方式，让日常多一点新鲜感。</p>
+          <a href="#">开始尝试 →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <a class="back" href="index.html">← 返回首页</a>
+
+  </main>
+
+  <footer>
+    愿每一次探索，都能带来新的发现。
+    <br><br>
+    © 2026 活人呼吸岛
+  </footer>
+
+</body>
+</html>
