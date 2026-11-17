@@ -1,0 +1,22 @@
+/* 活人呼吸岛 V2.0 */
+/* 全站统一样式 */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Microsoft YaHei", sans-serif;
+    background: #f5f7f2;
+    color: #29483b;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
