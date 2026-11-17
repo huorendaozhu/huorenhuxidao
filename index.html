@@ -1,1 +1,174 @@
-这里是活人呼吸岛，欢迎停下来喘口气。
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>活人呼吸岛</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f7f7f2;
+      color: #344b3b;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+    }
+
+    header {
+      padding: 24px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h2 {
+      margin: 0;
+    }
+
+    nav a {
+      color: #526b58;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 35px auto;
+      padding: 0 24px;
+    }
+
+    .hero {
+      background: #e6eee5;
+      border-radius: 22px;
+      padding: 35px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      line-height: 1.5;
+    }
+
+    .hero p {
+      line-height: 2;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    .section {
+      margin-top: 55px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 45px 15px;
+      color: #829083;
+    }
+
+    @media (max-width: 650px) {
+      header {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 12px 0 0;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h2>🌿 活人呼吸岛</h2>
+    <nav>
+      <a href="#">首页</a>
+      <a href="#island">岛上角落</a>
+      <a href="#about">关于</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p>WELCOME TO MY ISLAND</p>
+        <h1>这里是活人呼吸岛</h1>
+        <p>欢迎停下来，喘口气。</p>
+        <p>生活不只有赶路，还有感受、探索和发现。</p>
+      </div>
+
+      <img src="主页大树.png" alt="活人呼吸岛的风景">
+    </section>
+
+    <section class="section" id="island">
+      <h2>岛上的几个角落</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>📝 随手记</h3>
+          <p>记录生活中的灵感与想法。</p>
+        </div>
+
+        <div class="card">
+          <h3>🌱 去探索</h3>
+          <p>保持好奇，发现世界的有趣之处。</p>
+        </div>
+
+        <div class="card">
+          <h3>☀️ 慢生活</h3>
+          <p>给自己一点时间，感受生活。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <h2>关于这座岛</h2>
+      <p>这里没有标准答案，也不需要时刻保持优秀。</p>
+      <p>只希望每一个来到这里的人，都能自在地做自己。</p>
+    </section>
+  </main>
+
+  <footer>
+    愿你始终是一个自由的活人。
+    <br><br>
+    © 2026 活人呼吸岛
+  </footer>
+
+</body>
+</html>
+
