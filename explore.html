@@ -3,161 +3,613 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>探索岛屿｜活人呼吸岛</title>
+  <meta name="description" content="活人呼吸岛内容岛：真实故事、生活观察、有趣发现与不同的人生选择。">
+  <title>内容岛｜活人呼吸岛</title>
   <link rel="stylesheet" href="css/style.css">
+
   <style>
-    .page {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 24px;
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f7f7f1;
+      color: #293b32;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "PingFang SC", "Microsoft YaHei", sans-serif;
     }
 
-    .intro {
-      background: #e6eee5;
-      padding: 40px;
+    a { color: inherit; text-decoration: none; }
+
+    .page-wrap {
+      width: min(1160px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .topbar {
+      padding: 22px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid #e4e9df;
+    }
+
+    .brand {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 4px;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      color: #829185;
+    }
+
+    .nav {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: #68786d;
+    }
+
+    .nav a:hover, .nav a.active { color: #3d765a; }
+
+    /* 主视觉 */
+
+    .hero {
+      min-height: 440px;
+      margin: 32px 0 65px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(22,43,36,.67), rgba(22,43,36,.12)),
+        url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=85")
+        center 52% / cover;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      padding: 65px;
+      color: white;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: #e0e9dc;
+      margin-bottom: 23px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.3;
+      margin: 0 0 20px;
+      font-weight: 750;
+    }
+
+    .hero p {
+      max-width: 490px;
+      font-size: 15px;
+      line-height: 2;
+      color: rgba(255,255,255,.88);
+    }
+
+    .hero-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid rgba(255,255,255,.7);
+      font-size: 14px;
+    }
+
+    /* 通用模块 */
+
+    .section { margin: 65px 0; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      color: #829487;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .section-heading h2 {
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .section-heading p {
+      font-size: 13px;
+      color: #89958b;
+      margin: 0;
+    }
+
+    /* 专题 */
+
+    .topics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .topic {
+      position: relative;
+      height: 215px;
+      border-radius: 17px;
+      overflow: hidden;
+      color: white;
+      display: flex;
+      align-items: end;
+      transition: transform .25s;
+      background: #dce6dc;
+    }
+
+    .topic:hover { transform: translateY(-4px); }
+
+    .topic img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+
+    .topic:hover img { transform: scale(1.05); }
+
+    .topic::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 20%, rgba(20,38,30,.75));
+    }
+
+    .topic-info {
+      position: relative;
+      z-index: 1;
+      padding: 22px;
+    }
+
+    .topic-info span {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #e0e9df;
+    }
+
+    .topic-info h3 {
+      margin: 9px 0 5px;
+      font-size: 19px;
+    }
+
+    .topic-info p {
+      margin: 0;
+      font-size: 12px;
+      color: rgba(255,255,255,.83);
+    }
+
+    /* 精选内容 */
+
+    .featured {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 22px;
+    }
+
+    .story {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid #e8ebe5;
+      transition: .25s;
+    }
+
+    .story:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(49,76,57,.09);
+    }
+
+    .story-image {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .story-body { padding: 24px; }
+
+    .tag {
+      font-size: 11px;
+      color: #719276;
+      letter-spacing: 1px;
+    }
+
+    .story h3 {
+      font-size: 21px;
+      line-height: 1.55;
+      margin: 12px 0;
+    }
+
+    .story p {
+      color: #849087;
+      font-size: 13px;
+      line-height: 1.9;
+      margin: 0;
+    }
+
+    .side-stories {
+      display: grid;
+      gap: 17px;
+    }
+
+    .side-story {
+      display: grid;
+      grid-template-columns: 125px 1fr;
+      gap: 16px;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #e8ebe5;
+      border-radius: 16px;
+      padding: 12px;
+      transition: .2s;
+    }
+
+    .side-story:hover { transform: translateY(-3px); }
+
+    .side-story img {
+      width: 125px;
+      height: 112px;
+      object-fit: cover;
+      border-radius: 11px;
+    }
+
+    .side-story h3 {
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 8px 0;
+    }
+
+    .side-story p {
+      color: #89948b;
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 最新内容 */
+
+    .latest-list { border-top: 1px solid #e2e8df; }
+
+    .latest-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 5px;
+      border-bottom: 1px solid #e2e8df;
+    }
+
+    .latest-item h3 {
+      font-size: 16px;
+      margin: 0 0 7px;
+    }
+
+    .latest-item p {
+      font-size: 12px;
+      color: #89948b;
+      margin: 0;
+    }
+
+    .latest-item time {
+      white-space: nowrap;
+      font-size: 12px;
+      color: #9aa49b;
+    }
+
+    /* 岛屿寄语 */
+
+    .island-quote {
+      margin: 70px 0;
+      min-height: 260px;
       border-radius: 22px;
-      margin-bottom: 35px;
+      overflow: hidden;
+      position: relative;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 45px 20px;
+      background:
+        linear-gradient(rgba(29,55,43,.45), rgba(29,55,43,.55)),
+        url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1500&q=85")
+        center / cover;
+      color: white;
     }
 
-    .intro h1 {
-      font-size: 36px;
-      margin-bottom: 12px;
+    .island-quote p {
+      font-size: clamp(24px, 4vw, 34px);
+      line-height: 1.6;
+      margin: 0;
+      font-weight: 650;
     }
 
-    .intro p {
+    .island-quote small {
+      display: block;
+      margin-top: 15px;
+      color: rgba(255,255,255,.82);
+      letter-spacing: 3px;
+    }
+
+    footer {
+      padding: 30px 0 40px;
+      border-top: 1px solid #e2e8df;
+      color: #89958b;
+      font-size: 12px;
+      text-align: center;
       line-height: 2;
     }
 
-    .explore-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .explore-card {
-      background: white;
-      padding: 25px;
-      border-radius: 16px;
-      border: 1px solid #edf0e9;
-    }
-
-    .explore-card h3 {
-      margin-top: 0;
-    }
-
-    .explore-card p {
-      color: #718074;
-      line-height: 1.8;
-    }
-
-    .explore-card a {
-      color: #52745b;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .back {
-      display: inline-block;
-      margin-top: 35px;
-      color: #52745b;
-      text-decoration: none;
-    }
-
-    @media (max-width: 650px) {
-      .explore-grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 760px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
       }
 
-      .intro {
-        padding: 25px;
-      }
+      .nav { gap: 15px; }
 
-      .intro h1 {
-        font-size: 28px;
+      .hero { min-height: 390px; }
+      .hero-content { padding: 35px 27px; }
+
+      .topics { grid-template-columns: repeat(2, 1fr); }
+      .featured { grid-template-columns: 1fr; }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
       }
+    }
+
+    @media (max-width: 480px) {
+      .topics { grid-template-columns: 1fr; }
+      .topic { height: 190px; }
+      .side-story { grid-template-columns: 105px 1fr; }
+      .side-story img { width: 105px; height: 105px; }
+      .latest-item { align-items: flex-start; }
     }
   </style>
 </head>
 
 <body>
+<div class="page-wrap">
 
-  <header>
-    <h2>🌿 活人呼吸岛</h2>
-    <nav>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      活人呼吸岛
+      <small>AN ISLAND FOR LIVING</small>
+    </a>
+
+    <nav class="nav">
       <a href="index.html">首页</a>
-      <a href="explore.html">探索岛屿</a>
-      <a href="discussion.html">岛民讨论</a>
-      <a href="ai-tools.html">AI工具岛</a>
-      <a href="lab.html">创意实验室</a>
-      <a href="about.html">关于岛屿</a>
+      <a class="active" href="explore.html">内容岛</a>
+      <a href="discussion.html">社区岛</a>
+      <a href="ai-tools.html">工具岛</a>
+      <a href="lab.html">创意岛</a>
+      <a href="about.html">关于</a>
     </nav>
   </header>
 
-  <main class="page">
+  <main>
 
-    <section class="intro">
-      <p>EXPLORE THE WORLD</p>
-      <h1>探索岛屿</h1>
-      <p>
-        世界很大，生活也有很多种可能。
-        在这里，我们分享知识、发现新事物，
-        也记录那些值得思考的小小瞬间。
-      </p>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-label">THE CONTENT ISLAND</div>
+        <h1>岛上有故事，<br>也有生活的另一种可能。</h1>
+        <p>
+          这里收集真实的人生故事、有趣的生活观察、
+          值得了解的新鲜事，以及那些不那么标准的答案。
+          你可以随意逛逛，不必带着目的而来。
+        </p>
+        <a class="hero-link" href="#topics">从一个感兴趣的话题开始 →</a>
+      </div>
     </section>
 
-    <section>
-      <h2>岛上的探索路线</h2>
-
-      <div class="explore-grid">
-
-        <div class="explore-card">
-          <h3>🌍 世界观察</h3>
-          <p>关注社会、科技、商业和世界正在发生的变化。</p>
-          <a href="#">开始探索 →</a>
+    <section class="section" id="topics">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">FIND YOUR INTEREST</div>
+          <h2>岛上专题</h2>
         </div>
+        <p>不同的方向，都值得探索</p>
+      </div>
 
-        <div class="explore-card">
-          <h3>🧠 知识补给</h3>
-          <p>学习新知识，理解复杂事物，拓展认知边界。</p>
-          <a href="#">开始学习 →</a>
-        </div>
+      <div class="topics">
 
-        <div class="explore-card">
-          <h3>💡 灵感收集</h3>
-          <p>记录有趣的想法、生活观察和突然出现的灵感。</p>
-          <a href="#">寻找灵感 →</a>
-        </div>
+        <a class="topic" href="#latest">
+          <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=80" alt="清晨阳光下的自然风景">
+          <div class="topic-info">
+            <span>01 / LIFE</span>
+            <h3>慢一点也没关系</h3>
+            <p>关于休息、节奏与生活方式</p>
+          </div>
+        </a>
 
-        <div class="explore-card">
-          <h3>🤖 科技前沿</h3>
-          <p>探索人工智能、新技术和未来生活的可能性。</p>
-          <a href="#">了解科技 →</a>
-        </div>
+        <a class="topic" href="#latest">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80" alt="远方的山路与自然景观">
+          <div class="topic-info">
+            <span>02 / CHOICE</span>
+            <h3>人生可以转弯</h3>
+            <p>关于改变、选择与重新开始</p>
+          </div>
+        </a>
 
-        <div class="explore-card">
-          <h3>🎨 艺术与创造</h3>
-          <p>发现艺术、设计、音乐和各种有趣的创造方式。</p>
-          <a href="#">发现美好 →</a>
-        </div>
+        <a class="topic" href="#latest">
+          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80" alt="温暖的生活空间">
+          <div class="topic-info">
+            <span>03 / REAL</span>
+            <h3>不完美俱乐部</h3>
+            <p>普通人的真实生活与小小尴尬</p>
+          </div>
+        </a>
 
-        <div class="explore-card">
-          <h3>🌱 生活实验</h3>
-          <p>尝试新的生活方式，让日常多一点新鲜感。</p>
-          <a href="#">开始尝试 →</a>
-        </div>
+        <a class="topic" href="#latest">
+          <img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=800&q=80" alt="树林中的自然小路">
+          <div class="topic-info">
+            <span>04 / MEMORY</span>
+            <h3>遗憾收藏馆</h3>
+            <p>那些错过、未完成与难忘的瞬间</p>
+          </div>
+        </a>
+
+        <a class="topic" href="#latest">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="层叠的山脉与远方">
+          <div class="topic-info">
+            <span>05 / JOURNEY</span>
+            <h3>人生绕路博物馆</h3>
+            <p>试错、弯路，以及不一样的结局</p>
+          </div>
+        </a>
+
+        <a class="topic" href="#latest">
+          <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=800&q=80" alt="日出时分的自然风景">
+          <div class="topic-info">
+            <span>06 / DISCOVERY</span>
+            <h3>世界真有趣</h3>
+            <p>新鲜知识、科技与生活中的小发现</p>
+          </div>
+        </a>
 
       </div>
     </section>
 
-    <a class="back" href="index.html">← 返回首页</a>
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">EDITOR'S PICKS</div>
+          <h2>岛上精选</h2>
+        </div>
+        <p>一些值得停下来读一读的内容</p>
+      </div>
+
+      <div class="featured">
+
+        <a class="story" href="#latest">
+          <img class="story-image"
+            src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1100&q=85"
+            alt="阳光穿过森林">
+          <div class="story-body">
+            <span class="tag">真实故事 · LIFE</span>
+            <h3>有些时候，不是你不够努力，而是生活暂时没有给你机会。</h3>
+            <p>关于现实压力、生活节奏，以及那些身不由己的时刻。</p>
+          </div>
+        </a>
+
+        <div class="side-stories">
+
+          <a class="side-story" href="#latest">
+            <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=500&q=80" alt="远方的自然风景">
+            <div>
+              <span class="tag">人生选择</span>
+              <h3>如果现在的方向不适合你，转弯也没关系。</h3>
+              <p>人生不只有一条正确路线。</p>
+            </div>
+          </a>
+
+          <a class="side-story" href="#latest">
+            <img src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=500&q=80" alt="安静温暖的生活空间">
+            <div>
+              <span class="tag">生活观察</span>
+              <h3>为什么我们连休息的时候，都觉得自己有罪？</h3>
+              <p>关于忙碌、效率与休息的意义。</p>
+            </div>
+          </a>
+
+          <a class="side-story" href="#latest">
+            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=500&q=80" alt="充满灵感的工作空间">
+            <div>
+              <span class="tag">世界真有趣</span>
+              <h3>生活里那些容易被忽略的小发明。</h3>
+              <p>一些不起眼，却很聪明的生活灵感。</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="latest">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">LATEST STORIES</div>
+          <h2>最近岛上有什么</h2>
+        </div>
+        <p>持续更新，慢慢丰富</p>
+      </div>
+
+      <div class="latest-list">
+        <a class="latest-item" href="#topics">
+          <div>
+            <h3>允许自己暂时没有答案</h3>
+            <p>生活观察 · 关于不确定性</p>
+          </div>
+          <time>待更新</time>
+        </a>
+
+        <a class="latest-item" href="#topics">
+          <div>
+            <h3>那些不被计划的人生转折</h3>
+            <p>人生选择 · 关于变化</p>
+          </div>
+          <time>待更新</time>
+        </a>
+
+        <a class="latest-item" href="#topics">
+          <div>
+            <h3>世界正在发生哪些有趣的变化？</h3>
+            <p>新鲜发现 · 科技与生活</p>
+          </div>
+          <time>待更新</time>
+        </a>
+
+        <a class="latest-item" href="#topics">
+          <div>
+            <h3>不那么完美的一天，也值得好好过</h3>
+            <p>日常生活 · 普通人的小事</p>
+          </div>
+          <time>待更新</time>
+        </a>
+      </div>
+    </section>
+
+    <section class="island-quote">
+      <div>
+        <p>人向哪儿走，都是向前走。</p>
+        <small>活人呼吸岛 · 岛屿寄语</small>
+      </div>
+    </section>
 
   </main>
 
   <footer>
-    愿每一次探索，都能带来新的发现。
-    <br><br>
-    © 2026 活人呼吸岛
+    <div>活人呼吸岛 · 一个关于生活、故事、探索与创造的小岛</div>
+    <div>世界可以很快，但你不必一直很赶。</div>
   </footer>
 
+</div>
 </body>
 </html>
