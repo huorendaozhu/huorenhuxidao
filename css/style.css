@@ -50,6 +50,18 @@ header nav a {
     white-space: nowrap;
 }
 
+/* 全站统一页脚 */
+
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 45px 15px;
+    color: #829083;
+    line-height: 1.8;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
 /* 手机和平板适配 */
 
 @media (max-width: 850px) {
