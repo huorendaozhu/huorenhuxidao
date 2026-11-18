@@ -1,163 +1,474 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>岛民讨论区｜活人呼吸岛</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .page {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 24px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社区岛｜活人呼吸岛</title>
+<style>
+:root {
+  --bg:#f6f4ee;
+  --paper:#fbfaf6;
+  --ink:#293d34;
+  --muted:#92988f;
+  --green:#748a79;
+  --line:#e7e4db;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);line-height:1.8;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.shell{width:min(1080px,calc(100% - 48px));margin:auto}
 
-    .intro {
-      background: #e6eee5;
-      padding: 40px;
-      border-radius: 22px;
-      margin-bottom: 35px;
-    }
+/* 顶部导航 */
+header{
+  height:76px;display:flex;align-items:center;
+  justify-content:space-between;border-bottom:1px solid var(--line);
+}
+.brand{font:20px var(--serif);letter-spacing:.08em}
+nav{display:flex;gap:27px;font-size:13px;color:#7e877f}
+nav a.active{color:var(--ink);border-bottom:1px solid var(--green);padding-bottom:6px}
 
-    .intro h1 {
-      font-size: 36px;
-      margin-bottom: 12px;
-    }
+/* 页面标题 */
+.hero{padding:66px 0 43px}
+.eyebrow{font-size:10px;letter-spacing:.2em;color:var(--green)}
+.hero h1{
+  font:500 clamp(36px,5vw,49px)/1.4 var(--serif);
+  letter-spacing:.07em;margin:13px 0 8px;
+}
+.hero p{font-size:14px;color:#818980;margin:0}
+.hero-bottom{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-top:25px;
+}
+.hero-bottom span{font-size:12px;color:#9a9f97}
+.write-btn{
+  border:1px solid #bdc9bd;padding:9px 17px;
+  background:transparent;color:#59715f;border-radius:3px;
+  font-size:12px;
+}
+.write-btn:hover{background:#e9eee7}
 
-    .intro p {
-      line-height: 2;
-    }
+/* 今日话题 */
+.topic{
+  position:relative;overflow:hidden;
+  background:#e9ece4;border:1px solid #e1e5dc;
+  padding:29px 34px;margin-bottom:47px;
+}
+.topic:after{
+  content:"";position:absolute;width:190px;height:190px;
+  border:1px solid rgba(111,137,119,.14);
+  border-radius:50%;right:-58px;top:-95px;
+  pointer-events:none;
+}
+.topic-label{
+  display:flex;align-items:center;gap:10px;
+  color:#748a79;font-size:10px;letter-spacing:.16em;
+}
+.topic-label i{
+  width:6px;height:6px;border-radius:50%;
+  background:#839985;
+}
+.topic h2{
+  font:500 clamp(21px,3vw,27px)/1.65 var(--serif);
+  margin:16px 0 7px;max-width:720px;
+}
+.topic-desc{font-size:13px;color:#7f8980;margin:0}
+.topic-bottom{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-top:23px;gap:15px;
+}
+.topic-category{font-size:11px;color:#8b958b}
+.topic-link{
+  font-size:12px;color:#58735f;
+  border-bottom:1px solid #a8b8a9;padding-bottom:3px;
+  background:none;border-top:0;border-left:0;border-right:0;
+}
 
-    .topics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
+/* 区块标题 */
+.section-title{
+  display:flex;justify-content:space-between;
+  align-items:baseline;border-bottom:1px solid var(--line);
+  padding-bottom:13px;margin-bottom:20px;
+}
+.section-title h2{font:500 21px var(--serif);margin:0}
+.section-title span{font-size:10px;color:#a0a49d;letter-spacing:.12em}
 
-    .topic {
-      background: white;
-      padding: 25px;
-      border-radius: 16px;
-      border: 1px solid #edf0e9;
-    }
+/* 动态主体 */
+.community-layout{
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;
+  gap:36px;align-items:start;
+}
+.feed{display:flex;flex-direction:column;gap:0}
+.post{
+  padding:23px 0 25px;border-bottom:1px solid var(--line);
+}
+.person{display:flex;align-items:center;gap:11px}
+.avatar{
+  width:37px;height:37px;border-radius:50%;
+  background:#e7eae0;color:#6d806f;
+  display:grid;place-items:center;font:15px var(--serif);
+}
+.avatar.sand{background:#eee7db;color:#8c7a66}
+.avatar.blue{background:#e4eae8;color:#657c77}
+.name{font-size:13px;color:#46564c}
+.time{font-size:10px;color:#a1a59e}
+.post-text{
+  font:15px/2 var(--serif);color:#45534a;
+  margin:15px 0 12px;
+}
+.post-photo{
+  width:100%;max-height:175px;object-fit:cover;
+  display:block;margin:14px 0 10px;
+  border-radius:2px;filter:saturate(.78);
+}
+.tag{font-size:10px;color:#8c9b8d}
+.actions{display:flex;gap:20px;margin-top:14px}
+.action{
+  padding:0;border:0;background:none;
+  color:#929990;font-size:11px;
+}
+.action:hover,.action.liked{color:#708875}
+.comments{
+  display:none;margin-top:15px;padding:12px 15px;
+  background:#f0efe8;
+}
+.comments.open{display:block}
+.comments p{font-size:12px;color:#788078;margin:4px 0}
 
-    .topic p {
-      color: #718074;
-      line-height: 1.8;
-    }
+/* 右侧精选 */
+.sidebar{position:sticky;top:20px}
+.side-section{margin-bottom:34px}
+.side-heading{
+  font:500 17px var(--serif);
+  border-bottom:1px solid var(--line);
+  padding-bottom:11px;margin-bottom:15px;
+}
+.pick{margin-bottom:18px}
+.pick img{
+  width:100%;height:110px;object-fit:cover;
+  display:block;border-radius:2px;
+}
+.pick-title{font:14px var(--serif);margin:8px 0 2px}
+.pick-desc{font-size:11px;color:#92988f;margin:0}
+.pick-note{
+  font-size:11px;line-height:1.9;color:#7e887f;
+  background:#eeeee7;padding:14px;margin-top:12px;
+}
 
-    .notice {
-      background: #f0f3ed;
-      padding: 25px;
-      border-radius: 16px;
-      margin-top: 30px;
-      line-height: 1.9;
-    }
+/* 音乐入口 */
+.music-entry{
+  display:flex;align-items:center;gap:11px;
+  padding:13px;background:#eeeee7;
+  border:1px solid #e6e5dc;
+}
+.music-icon{
+  width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#dfe6dd;color:#6d806f;
+}
+.music-entry strong{font:13px var(--serif)}
+.music-entry small{display:block;color:#969d94;font-size:10px}
 
-    .back {
-      display: inline-block;
-      margin-top: 35px;
-      color: #52745b;
-      text-decoration: none;
-    }
+/* 发帖区域 */
+.write-panel{
+  display:none;padding:20px;margin:0 0 25px;
+  background:var(--paper);border:1px solid var(--line);
+}
+.write-panel.open{display:block}
+.write-panel textarea{
+  width:100%;min-height:100px;padding:12px;
+  background:#fffefa;border:1px solid var(--line);
+  resize:vertical;font:13px/1.8 var(--sans);
+}
+.write-panel button{
+  margin-top:10px;padding:8px 17px;
+  background:var(--green);color:white;border:0;
+}
+footer{
+  margin-top:55px;padding:25px 0 38px;
+  border-top:1px solid var(--line);
+  text-align:center;color:#92988f;
+  font:12px var(--serif);letter-spacing:.08em;
+}
 
-    @media (max-width: 650px) {
-      .topics {
-        grid-template-columns: 1fr;
-      }
-
-      .intro {
-        padding: 25px;
-      }
-
-      .intro h1 {
-        font-size: 28px;
-      }
-    }
-  </style>
+@media(max-width:760px){
+  .shell{width:calc(100% - 32px)}
+  header{height:65px}
+  .brand{font-size:16px}
+  nav{gap:13px;font-size:11px}
+  .hero{padding:45px 0 30px}
+  .topic{padding:23px 20px;margin-bottom:35px}
+  .community-layout{grid-template-columns:1fr;gap:38px}
+  .sidebar{position:static}
+  .pick-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pick img{height:105px}
+  .hero-bottom{gap:12px}
+  .section-title span{font-size:9px}
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <h2>🌿 活人呼吸岛</h2>
-    <nav>
-      <a href="index.html">首页</a>
-      <a href="explore.html">探索岛屿</a>
-      <a href="discussion.html">岛民讨论</a>
-      <a href="ai-tools.html">AI工具岛</a>
-      <a href="lab.html">创意实验室</a>
-      <a href="about.html">关于岛屿</a>
-    </nav>
-  </header>
+<header class="shell">
+  <a class="brand" href="index.html">活人呼吸岛</a>
+  <nav>
+    <a href="index.html">首页</a>
+    <a href="content.html">内容岛</a>
+    <a class="active" href="discussion.html">社区岛</a>
+  </nav>
+</header>
 
-  <main class="page">
+<main class="shell">
 
-    <section class="intro">
-      <p>LET'S TALK</p>
-      <h1>岛民讨论区</h1>
-      <p>
-        想法不必完全一致，观点可以自由碰撞。
-        在这里，每个人都可以表达自己的想法，
-        分享经历，也听听不同的声音。
-      </p>
-    </section>
+  <!-- 页面介绍 -->
+  <section class="hero">
+    <div class="eyebrow">COMMUNITY ISLAND · A PLACE TO CONNECT</div>
+    <h1>社区岛</h1>
+    <p>让每一种生活，都有地方可以分享。</p>
+    <div class="hero-bottom">
+      <span>分享日常，交换想法，遇见不同的生活。</span>
+      <button class="write-btn" id="openWrite">＋ 写下今天</button>
+    </div>
+  </section>
+
+  <!-- 今日话题 -->
+  <section class="topic">
+    <div class="topic-label"><i></i> TODAY'S TOPIC · 今日话题</div>
+    <h2>最近有什么小事，让你觉得生活还不错？</h2>
+    <p class="topic-desc">
+      有时候，让人开心的并不是什么大事。
+      也许是一顿好吃的饭，一次偶然的相遇，或一个被理解的瞬间。
+    </p>
+    <div class="topic-bottom">
+      <span class="topic-category">生活观察 · 轻松交流</span>
+      <button class="topic-link" id="joinTopic">说说你的答案 →</button>
+    </div>
+  </section>
+
+  <!-- 发帖区域 -->
+  <section class="write-panel" id="writePanel">
+    <textarea id="postInput" placeholder="今天有什么想分享的？写下你的生活片刻或对今日话题的想法……"></textarea>
+    <button id="submitPost">写下这段记录</button>
+  </section>
+
+  <!-- 社区主体 -->
+  <div class="community-layout">
 
     <section>
-      <h2>今天，我们聊些什么？</h2>
+      <div class="section-title">
+        <h2>今日呼吸记录</h2>
+        <span>DAILY MOMENTS</span>
+      </div>
 
-      <div class="topics">
+      <div class="feed" id="feed">
 
-        <div class="topic">
-          <h3>💬 生活闲聊</h3>
-          <p>分享日常、兴趣、趣事，以及生活中的小发现。</p>
-        </div>
+        <article class="post">
+          <div class="person">
+            <div class="avatar">林</div>
+            <div>
+              <div class="name">林间散步</div>
+              <div class="time">今天 · 10:32</div>
+            </div>
+          </div>
+          <p class="post-text">
+            下班路上绕了一点远路。街角那家小店亮着暖黄色的灯，
+            忽然觉得，今天也没有那么匆忙了。
+          </p>
+          <span class="tag">生活片刻</span>
+          <img class="post-photo"
+            src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80"
+            alt="暖色灯光下的小店">
+          <div class="actions">
+            <button class="action like">♡ <span>12</span></button>
+            <button class="action comment-toggle">留言 · 3</button>
+          </div>
+          <div class="comments">
+            <p>小满：这样的路，好像值得多走一会儿。</p>
+            <p>阿禾：喜欢这种不赶时间的感觉。</p>
+          </div>
+        </article>
 
-        <div class="topic">
-          <h3>🌍 世界与观点</h3>
-          <p>聊聊社会变化、热点事件，以及不同的观察视角。</p>
-        </div>
+        <article class="post">
+          <div class="person">
+            <div class="avatar sand">七</div>
+            <div>
+              <div class="name">七月的风</div>
+              <div class="time">今天 · 09:18</div>
+            </div>
+          </div>
+          <p class="post-text">
+            早上给自己煮了碗热粥。窗外有点凉，
+            手心捧着碗的时候，觉得日子其实可以很简单。
+          </p>
+          <span class="tag">日常心情</span>
+          <div class="actions">
+            <button class="action like">♡ <span>8</span></button>
+            <button class="action comment-toggle">留言 · 2</button>
+          </div>
+          <div class="comments">
+            <p>南枝：热腾腾的早餐真的很治愈。</p>
+          </div>
+        </article>
 
-        <div class="topic">
-          <h3>🤖 AI与未来</h3>
-          <p>交流人工智能、新技术，以及未来生活的想象。</p>
-        </div>
-
-        <div class="topic">
-          <h3>💡 奇思妙想</h3>
-          <p>那些不一定成熟，但值得拿出来讨论的想法。</p>
-        </div>
-
-        <div class="topic">
-          <h3>📚 学习成长</h3>
-          <p>分享知识、学习经验，以及成长过程中的收获。</p>
-        </div>
-
-        <div class="topic">
-          <h3>🌱 自由话题</h3>
-          <p>不设定边界，任何有意思的话题都可以在这里出现。</p>
-        </div>
+        <article class="post">
+          <div class="person">
+            <div class="avatar blue">禾</div>
+            <div>
+              <div class="name">阿禾</div>
+              <div class="time">昨天 · 21:06</div>
+            </div>
+          </div>
+          <p class="post-text">
+            把房间收拾了一小块出来，放上喜欢的书和杯子。
+            没有大变化，但看着舒服了很多。
+          </p>
+          <span class="tag">给生活一点空间</span>
+          <img class="post-photo"
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80"
+            alt="温馨的室内空间">
+          <div class="actions">
+            <button class="action like">♡ <span>16</span></button>
+            <button class="action comment-toggle">留言 · 4</button>
+          </div>
+          <div class="comments">
+            <p>林间散步：整理一点点，也会有新鲜感。</p>
+          </div>
+        </article>
 
       </div>
     </section>
 
-    <section class="notice">
-      <h3>🏝️ 岛民交流公约</h3>
-      <p>1. 尊重不同观点，不进行人身攻击。</p>
-      <p>2. 鼓励真实表达，也欢迎理性讨论。</p>
-      <p>3. 不传播违法、有害或侵犯他人权益的内容。</p>
-      <p>4. 保持开放、友善，让每个人都能自在交流。</p>
-    </section>
+    <!-- 侧边精选内容 -->
+    <aside class="sidebar">
 
-    <a class="back" href="index.html">← 返回首页</a>
+      <section class="side-section">
+        <div class="side-heading">岛上拾光</div>
+        <div class="pick-list">
 
-  </main>
+          <article class="pick">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=500&q=80" alt="一杯咖啡">
+            <p class="pick-title">给自己一点慢下来的时间</p>
+            <p class="pick-desc">一份平常日子的温柔</p>
+          </article>
 
-  <footer>
-    每一种声音，都值得被认真听见。
-    <br><br>
-    © 2026 活人呼吸岛
-  </footer>
+          <article class="pick">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b1f?auto=format&fit=crop&w=500&q=80" alt="树木与自然光">
+            <p class="pick-title">生活里的小小发现</p>
+            <p class="pick-desc">那些值得留下的瞬间</p>
+          </article>
+
+        </div>
+        <div class="pick-note">
+          这里会慢慢收集岛上值得留下的照片、
+          句子和故事，让每一次分享都留下痕迹。
+        </div>
+      </section>
+
+      <section class="side-section">
+        <div class="side-heading">岛上的声音</div>
+        <div class="music-entry">
+          <div class="music-icon">♫</div>
+          <div>
+            <strong>今日音乐主题</strong>
+            <small>每天一份共享的声音</small>
+          </div>
+        </div>
+        <p class="pick-desc" style="margin-top:10px">
+          音乐播放器将在后续版本接入。
+        </p>
+      </section>
+
+    </aside>
+  </div>
+</main>
+
+<footer class="shell">往哪里走，都是往前走。</footer>
+
+<script>
+// 打开发帖区域
+function openWriting(){
+  const panel=document.getElementById('writePanel');
+  panel.classList.add('open');
+  panel.scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('postInput').focus();
+}
+
+document.getElementById('openWrite').addEventListener('click',openWriting);
+document.getElementById('joinTopic').addEventListener('click',openWriting);
+
+// 点赞
+function bindLike(btn){
+  btn.addEventListener('click',()=>{
+    const liked=btn.classList.toggle('liked');
+    const count=btn.querySelector('span');
+    count.textContent=Number(count.textContent)+(liked?1:-1);
+    btn.firstChild.textContent=liked?'♥ ':'♡ ';
+  });
+}
+
+document.querySelectorAll('.like').forEach(bindLike);
+
+// 展开留言
+function bindComment(btn){
+  btn.addEventListener('click',()=>{
+    const box=btn.closest('.post').querySelector('.comments');
+    if(box) box.classList.toggle('open');
+  });
+}
+
+document.querySelectorAll('.comment-toggle').forEach(bindComment);
+
+// 新增动态：仅当前页面演示，不会保存到服务器
+document.getElementById('submitPost').addEventListener('click',()=>{
+  const input=document.getElementById('postInput');
+  const value=input.value.trim();
+
+  if(!value){
+    alert('先写下一点想分享的内容吧。');
+    return;
+  }
+
+  const article=document.createElement('article');
+  article.className='post';
+
+  const person=document.createElement('div');
+  person.className='person';
+  person.innerHTML='<div class="avatar">你</div><div><div class="name">岛上访客</div><div class="time">刚刚</div></div>';
+
+  const paragraph=document.createElement('p');
+  paragraph.className='post-text';
+  paragraph.textContent=value;
+
+  const tag=document.createElement('span');
+  tag.className='tag';
+  tag.textContent='生活分享';
+
+  const actions=document.createElement('div');
+  actions.className='actions';
+  actions.innerHTML='<button class="action like">♡ <span>0</span></button><button class="action comment-toggle">留言</button>';
+
+  const comments=document.createElement('div');
+  comments.className='comments';
+
+  article.append(person,paragraph,tag,actions,comments);
+
+  bindLike(actions.querySelector('.like'));
+  bindComment(actions.querySelector('.comment-toggle'));
+
+  document.getElementById('feed').prepend(article);
+
+  input.value='';
+  document.getElementById('writePanel').classList.remove('open');
+
+  article.scrollIntoView({behavior:'smooth'});
+});
+</script>
 
 </body>
 </html>
