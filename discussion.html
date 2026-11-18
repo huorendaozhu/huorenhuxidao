@@ -1,474 +1,1297 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>社区岛｜活人呼吸岛</title>
-<style>
-:root {
-  --bg:#f6f4ee;
-  --paper:#fbfaf6;
-  --ink:#293d34;
-  --muted:#92988f;
-  --green:#748a79;
-  --line:#e7e4db;
-  --serif:"Noto Serif SC","Songti SC","STSong",serif;
-  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font-family:var(--sans);line-height:1.8;
-}
-a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer}
-.shell{width:min(1080px,calc(100% - 48px));margin:auto}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f4ee">
+  <title>社区岛｜活人呼吸岛</title>
 
-/* 顶部导航 */
-header{
-  height:76px;display:flex;align-items:center;
-  justify-content:space-between;border-bottom:1px solid var(--line);
-}
-.brand{font:20px var(--serif);letter-spacing:.08em}
-nav{display:flex;gap:27px;font-size:13px;color:#7e877f}
-nav a.active{color:var(--ink);border-bottom:1px solid var(--green);padding-bottom:6px}
+  <style>
+    :root {
+      --bg: #f6f4ee;
+      --paper: #fbfaf6;
+      --paper-deep: #f0eee5;
+      --ink: #293d34;
+      --muted: #7d857b;
+      --green: #748a79;
+      --green-deep: #526b5b;
+      --green-light: #e8ede5;
+      --line: #e7e4da;
+      --sand: #eee7d9;
+      --orange: #bd8b63;
+      --shadow: 0 12px 35px rgba(53, 66, 53, 0.055);
+      --radius: 18px;
+      --page-width: 1160px;
+    }
 
-/* 页面标题 */
-.hero{padding:66px 0 43px}
-.eyebrow{font-size:10px;letter-spacing:.2em;color:var(--green)}
-.hero h1{
-  font:500 clamp(36px,5vw,49px)/1.4 var(--serif);
-  letter-spacing:.07em;margin:13px 0 8px;
-}
-.hero p{font-size:14px;color:#818980;margin:0}
-.hero-bottom{
-  display:flex;justify-content:space-between;
-  align-items:center;margin-top:25px;
-}
-.hero-bottom span{font-size:12px;color:#9a9f97}
-.write-btn{
-  border:1px solid #bdc9bd;padding:9px 17px;
-  background:transparent;color:#59715f;border-radius:3px;
-  font-size:12px;
-}
-.write-btn:hover{background:#e9eee7}
+    * {
+      box-sizing: border-box;
+    }
 
-/* 今日话题 */
-.topic{
-  position:relative;overflow:hidden;
-  background:#e9ece4;border:1px solid #e1e5dc;
-  padding:29px 34px;margin-bottom:47px;
-}
-.topic:after{
-  content:"";position:absolute;width:190px;height:190px;
-  border:1px solid rgba(111,137,119,.14);
-  border-radius:50%;right:-58px;top:-95px;
-  pointer-events:none;
-}
-.topic-label{
-  display:flex;align-items:center;gap:10px;
-  color:#748a79;font-size:10px;letter-spacing:.16em;
-}
-.topic-label i{
-  width:6px;height:6px;border-radius:50%;
-  background:#839985;
-}
-.topic h2{
-  font:500 clamp(21px,3vw,27px)/1.65 var(--serif);
-  margin:16px 0 7px;max-width:720px;
-}
-.topic-desc{font-size:13px;color:#7f8980;margin:0}
-.topic-bottom{
-  display:flex;justify-content:space-between;
-  align-items:center;margin-top:23px;gap:15px;
-}
-.topic-category{font-size:11px;color:#8b958b}
-.topic-link{
-  font-size:12px;color:#58735f;
-  border-bottom:1px solid #a8b8a9;padding-bottom:3px;
-  background:none;border-top:0;border-left:0;border-right:0;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* 区块标题 */
-.section-title{
-  display:flex;justify-content:space-between;
-  align-items:baseline;border-bottom:1px solid var(--line);
-  padding-bottom:13px;margin-bottom:20px;
-}
-.section-title h2{font:500 21px var(--serif);margin:0}
-.section-title span{font-size:10px;color:#a0a49d;letter-spacing:.12em}
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family:
+        "PingFang SC",
+        "Microsoft YaHei",
+        "Noto Sans SC",
+        sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* 动态主体 */
-.community-layout{
-  display:grid;grid-template-columns:minmax(0,1fr) 260px;
-  gap:36px;align-items:start;
-}
-.feed{display:flex;flex-direction:column;gap:0}
-.post{
-  padding:23px 0 25px;border-bottom:1px solid var(--line);
-}
-.person{display:flex;align-items:center;gap:11px}
-.avatar{
-  width:37px;height:37px;border-radius:50%;
-  background:#e7eae0;color:#6d806f;
-  display:grid;place-items:center;font:15px var(--serif);
-}
-.avatar.sand{background:#eee7db;color:#8c7a66}
-.avatar.blue{background:#e4eae8;color:#657c77}
-.name{font-size:13px;color:#46564c}
-.time{font-size:10px;color:#a1a59e}
-.post-text{
-  font:15px/2 var(--serif);color:#45534a;
-  margin:15px 0 12px;
-}
-.post-photo{
-  width:100%;max-height:175px;object-fit:cover;
-  display:block;margin:14px 0 10px;
-  border-radius:2px;filter:saturate(.78);
-}
-.tag{font-size:10px;color:#8c9b8d}
-.actions{display:flex;gap:20px;margin-top:14px}
-.action{
-  padding:0;border:0;background:none;
-  color:#929990;font-size:11px;
-}
-.action:hover,.action.liked{color:#708875}
-.comments{
-  display:none;margin-top:15px;padding:12px 15px;
-  background:#f0efe8;
-}
-.comments.open{display:block}
-.comments p{font-size:12px;color:#788078;margin:4px 0}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-/* 右侧精选 */
-.sidebar{position:sticky;top:20px}
-.side-section{margin-bottom:34px}
-.side-heading{
-  font:500 17px var(--serif);
-  border-bottom:1px solid var(--line);
-  padding-bottom:11px;margin-bottom:15px;
-}
-.pick{margin-bottom:18px}
-.pick img{
-  width:100%;height:110px;object-fit:cover;
-  display:block;border-radius:2px;
-}
-.pick-title{font:14px var(--serif);margin:8px 0 2px}
-.pick-desc{font-size:11px;color:#92988f;margin:0}
-.pick-note{
-  font-size:11px;line-height:1.9;color:#7e887f;
-  background:#eeeee7;padding:14px;margin-top:12px;
-}
+    button,
+    textarea,
+    input {
+      font: inherit;
+    }
 
-/* 音乐入口 */
-.music-entry{
-  display:flex;align-items:center;gap:11px;
-  padding:13px;background:#eeeee7;
-  border:1px solid #e6e5dc;
-}
-.music-icon{
-  width:34px;height:34px;border-radius:50%;
-  display:grid;place-items:center;
-  background:#dfe6dd;color:#6d806f;
-}
-.music-entry strong{font:13px var(--serif)}
-.music-entry small{display:block;color:#969d94;font-size:10px}
+    button {
+      cursor: pointer;
+    }
 
-/* 发帖区域 */
-.write-panel{
-  display:none;padding:20px;margin:0 0 25px;
-  background:var(--paper);border:1px solid var(--line);
-}
-.write-panel.open{display:block}
-.write-panel textarea{
-  width:100%;min-height:100px;padding:12px;
-  background:#fffefa;border:1px solid var(--line);
-  resize:vertical;font:13px/1.8 var(--sans);
-}
-.write-panel button{
-  margin-top:10px;padding:8px 17px;
-  background:var(--green);color:white;border:0;
-}
-footer{
-  margin-top:55px;padding:25px 0 38px;
-  border-top:1px solid var(--line);
-  text-align:center;color:#92988f;
-  font:12px var(--serif);letter-spacing:.08em;
-}
+    .page-shell {
+      width: min(var(--page-width), calc(100% - 64px));
+      margin: 0 auto;
+    }
 
-@media(max-width:760px){
-  .shell{width:calc(100% - 32px)}
-  header{height:65px}
-  .brand{font-size:16px}
-  nav{gap:13px;font-size:11px}
-  .hero{padding:45px 0 30px}
-  .topic{padding:23px 20px;margin-bottom:35px}
-  .community-layout{grid-template-columns:1fr;gap:38px}
-  .sidebar{position:static}
-  .pick-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .pick img{height:105px}
-  .hero-bottom{gap:12px}
-  .section-title span{font-size:9px}
-}
-</style>
+    /* 顶部导航 */
+
+    .topbar {
+      border-bottom: 1px solid rgba(74, 91, 75, 0.11);
+      background: rgba(246, 244, 238, 0.94);
+    }
+
+    .nav-wrap {
+      width: min(var(--page-width), calc(100% - 64px));
+      min-height: 76px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      line-height: 1.25;
+    }
+
+    .brand-name {
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 21px;
+      letter-spacing: 2px;
+      color: var(--ink);
+    }
+
+    .brand-sub {
+      margin-top: 5px;
+      font-size: 9px;
+      letter-spacing: 2.2px;
+      color: #92978c;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(15px, 2.3vw, 30px);
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      position: relative;
+      padding: 8px 0;
+      color: #68736a;
+      font-size: 13px;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: var(--green-deep);
+    }
+
+    .nav a.active::after {
+      position: absolute;
+      content: "";
+      left: 0;
+      right: 0;
+      bottom: 1px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--green);
+    }
+
+    /* 页面主体 */
+
+    main {
+      padding: 44px 0 90px;
+    }
+
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--green);
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: var(--green);
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 27px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      line-height: 1.4;
+    }
+
+    .section-desc {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* 今日话题 */
+
+    .topic-section {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 28px;
+      padding: 27px 32px;
+      margin-bottom: 42px;
+      border: 1px solid #e7e7dc;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(110deg, rgba(232, 237, 229, 0.92), rgba(248, 246, 239, 0.94));
+    }
+
+    .topic-label {
+      margin-bottom: 10px;
+      color: var(--green-deep);
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    .topic-question {
+      margin: 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: clamp(19px, 2.2vw, 25px);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .topic-note {
+      margin: 8px 0 0;
+      color: #7c877c;
+      font-size: 12px;
+    }
+
+    .topic-mark {
+      width: 70px;
+      height: 70px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(92, 119, 96, 0.2);
+      border-radius: 50%;
+      color: var(--green-deep);
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      transform: rotate(-8deg);
+    }
+
+    /* 主体两栏 */
+
+    .community-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      align-items: start;
+      gap: 46px;
+    }
+
+    .feed-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .feed-heading .section-title {
+      font-size: 25px;
+    }
+
+    .feed-count {
+      color: #9a9e93;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    /* 发布入口 */
+
+    .compose-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 17px 19px;
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .compose-box:hover {
+      border-color: #d6ddcf;
+      box-shadow: var(--shadow);
+    }
+
+    .compose-avatar {
+      width: 39px;
+      height: 39px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--green-light);
+      color: var(--green-deep);
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 17px;
+    }
+
+    .compose-placeholder {
+      flex: 1;
+      color: #a1a59b;
+      font-size: 13px;
+    }
+
+    .compose-button {
+      padding: 8px 17px;
+      border: 0;
+      border-radius: 30px;
+      background: var(--green-deep);
+      color: white;
+      font-size: 12px;
+      transition: background 0.2s ease;
+    }
+
+    .compose-button:hover {
+      background: #405b49;
+    }
+
+    /* 动态卡片 */
+
+    .post-card {
+      padding: 22px 22px 18px;
+      margin-bottom: 15px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--paper);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .post-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .post-user {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 15px;
+    }
+
+    .avatar {
+      width: 39px;
+      height: 39px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: #e9e8dc;
+      color: #6c7968;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 16px;
+    }
+
+    .avatar.warm {
+      background: #eee5d9;
+      color: #96775e;
+    }
+
+    .avatar.blue {
+      background: #e3e9e7;
+      color: #617c7b;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    .user-name {
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .post-time {
+      color: #a1a49b;
+      font-size: 10px;
+    }
+
+    .post-text {
+      margin: 0 0 15px;
+      color: #4b574e;
+      font-size: 14px;
+      line-height: 1.9;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .post-image {
+      display: block;
+      width: 100%;
+      max-height: 220px;
+      margin: 0 0 15px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: var(--paper-deep);
+    }
+
+    .post-image.small {
+      width: min(100%, 310px);
+      height: 180px;
+    }
+
+    .post-actions {
+      display: flex;
+      align-items: center;
+      gap: 23px;
+      padding-top: 13px;
+      border-top: 1px solid #efede5;
+    }
+
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #92988e;
+      font-size: 11px;
+      transition: color 0.2s ease;
+    }
+
+    .action-button:hover,
+    .action-button.liked {
+      color: #b8796c;
+    }
+
+    .action-icon {
+      font-size: 15px;
+    }
+
+    /* 留言区 */
+
+    .comment-panel {
+      display: none;
+      padding-top: 14px;
+    }
+
+    .comment-panel.open {
+      display: block;
+    }
+
+    .comment-list {
+      margin-bottom: 12px;
+    }
+
+    .comment-item {
+      padding: 7px 0;
+      color: #788075;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .comment-item strong {
+      margin-right: 7px;
+      color: var(--green-deep);
+      font-weight: 500;
+    }
+
+    .comment-form {
+      display: flex;
+      gap: 8px;
+    }
+
+    .comment-input {
+      min-width: 0;
+      flex: 1;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      outline: none;
+      background: #fffefa;
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .comment-input:focus {
+      border-color: #aab9a8;
+    }
+
+    .comment-submit {
+      padding: 8px 13px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--green-light);
+      color: var(--green-deep);
+      font-size: 11px;
+    }
+
+    /* 右侧精选 */
+
+    .sidebar {
+      position: sticky;
+      top: 24px;
+    }
+
+    .side-section {
+      padding: 21px;
+      margin-bottom: 17px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--paper);
+    }
+
+    .side-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .side-title {
+      margin: 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 19px;
+      font-weight: 400;
+    }
+
+    .side-en {
+      color: #a0a398;
+      font-size: 9px;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .memory-item {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-top: 1px solid #efede5;
+    }
+
+    .memory-item:first-of-type {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .memory-image {
+      width: 84px;
+      height: 72px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--paper-deep);
+    }
+
+    .memory-title {
+      margin: 0 0 5px;
+      color: #465449;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .memory-caption {
+      margin: 0;
+      color: #9a9e94;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    /* 岛上的声音 */
+
+    .sound-card {
+      position: relative;
+      overflow: hidden;
+      background: #edf0e8;
+    }
+
+    .sound-card::after {
+      position: absolute;
+      content: "♪";
+      right: 18px;
+      bottom: -16px;
+      color: rgba(82, 107, 91, 0.11);
+      font-family: Georgia, serif;
+      font-size: 95px;
+      line-height: 1;
+    }
+
+    .sound-card .side-title {
+      position: relative;
+      z-index: 1;
+    }
+
+    .sound-desc {
+      position: relative;
+      z-index: 1;
+      margin: 9px 0 14px;
+      color: #788477;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .sound-link {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      padding-bottom: 3px;
+      border-bottom: 1px solid #9aab98;
+      color: var(--green-deep);
+      font-size: 11px;
+    }
+
+    /* 发布弹窗 */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(37, 48, 40, 0.38);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(510px, 100%);
+      padding: 27px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--paper);
+      box-shadow: 0 20px 60px rgba(25, 35, 27, 0.18);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 21px;
+      font-weight: 400;
+    }
+
+    .modal-close {
+      width: 30px;
+      height: 30px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--paper-deep);
+      color: #737d72;
+      font-size: 18px;
+    }
+
+    .post-name-input,
+    .post-content-input {
+      width: 100%;
+      padding: 12px 13px;
+      margin-bottom: 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: none;
+      background: #fffefa;
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .post-content-input {
+      min-height: 145px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+
+    .post-name-input:focus,
+    .post-content-input:focus {
+      border-color: #aab9a8;
+    }
+
+    .modal-submit {
+      display: block;
+      width: 100%;
+      padding: 11px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--green-deep);
+      color: white;
+      font-size: 13px;
+    }
+
+    .modal-hint {
+      margin: 12px 0 0;
+      color: #a0a398;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    /* 页脚 */
+
+    footer {
+      padding: 27px 0 35px;
+      border-top: 1px solid var(--line);
+      color: #9a9e94;
+      font-size: 11px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    /* 手机端 */
+
+    @media (max-width: 850px) {
+      .page-shell,
+      .nav-wrap {
+        width: min(100% - 36px, var(--page-width));
+      }
+
+      .nav-wrap {
+        min-height: auto;
+        padding: 17px 0 14px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 13px;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 10px 22px;
+      }
+
+      .nav a {
+        font-size: 12px;
+      }
+
+      main {
+        padding-top: 30px;
+      }
+
+      .community-layout {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .side-section {
+        margin: 0;
+      }
+
+      .memory-section {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page-shell,
+      .nav-wrap {
+        width: calc(100% - 30px);
+      }
+
+      .brand-name {
+        font-size: 19px;
+      }
+
+      .nav {
+        gap: 8px 17px;
+      }
+
+      .nav a {
+        font-size: 11px;
+      }
+
+      .topic-section {
+        grid-template-columns: 1fr;
+        padding: 21px;
+      }
+
+      .topic-mark {
+        display: none;
+      }
+
+      .section-title,
+      .feed-heading .section-title {
+        font-size: 23px;
+      }
+
+      .feed-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .compose-box {
+        padding: 13px;
+        gap: 10px;
+      }
+
+      .compose-placeholder {
+        font-size: 12px;
+      }
+
+      .compose-button {
+        padding: 7px 12px;
+        font-size: 11px;
+      }
+
+      .post-card {
+        padding: 17px 15px 14px;
+      }
+
+      .sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .memory-section {
+        grid-column: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="shell">
-  <a class="brand" href="index.html">活人呼吸岛</a>
-  <nav>
-    <a href="index.html">首页</a>
-    <a href="content.html">内容岛</a>
-    <a class="active" href="discussion.html">社区岛</a>
-  </nav>
-</header>
+  <!-- 全站统一导航 -->
+  <header class="topbar">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-name">活人呼吸岛</span>
+        <span class="brand-sub">A PLACE TO BREATHE</span>
+      </a>
 
-<main class="shell">
-
-  <!-- 页面介绍 -->
-  <section class="hero">
-    <div class="eyebrow">COMMUNITY ISLAND · A PLACE TO CONNECT</div>
-    <h1>社区岛</h1>
-    <p>让每一种生活，都有地方可以分享。</p>
-    <div class="hero-bottom">
-      <span>分享日常，交换想法，遇见不同的生活。</span>
-      <button class="write-btn" id="openWrite">＋ 写下今天</button>
+      <nav class="nav" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="content.html">内容岛</a>
+        <a href="discussion.html" class="active">社区岛</a>
+        <a href="tools.html">工具岛</a>
+        <a href="creative.html">创意岛</a>
+        <a href="about.html">关于这座岛</a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <!-- 今日话题 -->
-  <section class="topic">
-    <div class="topic-label"><i></i> TODAY'S TOPIC · 今日话题</div>
-    <h2>最近有什么小事，让你觉得生活还不错？</h2>
-    <p class="topic-desc">
-      有时候，让人开心的并不是什么大事。
-      也许是一顿好吃的饭，一次偶然的相遇，或一个被理解的瞬间。
-    </p>
-    <div class="topic-bottom">
-      <span class="topic-category">生活观察 · 轻松交流</span>
-      <button class="topic-link" id="joinTopic">说说你的答案 →</button>
-    </div>
-  </section>
+  <main class="page-shell">
 
-  <!-- 发帖区域 -->
-  <section class="write-panel" id="writePanel">
-    <textarea id="postInput" placeholder="今天有什么想分享的？写下你的生活片刻或对今日话题的想法……"></textarea>
-    <button id="submitPost">写下这段记录</button>
-  </section>
-
-  <!-- 社区主体 -->
-  <div class="community-layout">
-
-    <section>
-      <div class="section-title">
-        <h2>今日呼吸记录</h2>
-        <span>DAILY MOMENTS</span>
+    <!-- 今日话题：进入社区后的第一个内容 -->
+    <section class="topic-section">
+      <div>
+        <div class="topic-label">TODAY'S TOPIC · 今日话题</div>
+        <h1 class="topic-question">
+          最近有什么小事，让你觉得生活还不错？
+        </h1>
+        <p class="topic-note">
+          不必是多么特别的事情，愿意分享的日常，都值得被看见。
+        </p>
       </div>
-
-      <div class="feed" id="feed">
-
-        <article class="post">
-          <div class="person">
-            <div class="avatar">林</div>
-            <div>
-              <div class="name">林间散步</div>
-              <div class="time">今天 · 10:32</div>
-            </div>
-          </div>
-          <p class="post-text">
-            下班路上绕了一点远路。街角那家小店亮着暖黄色的灯，
-            忽然觉得，今天也没有那么匆忙了。
-          </p>
-          <span class="tag">生活片刻</span>
-          <img class="post-photo"
-            src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=80"
-            alt="暖色灯光下的小店">
-          <div class="actions">
-            <button class="action like">♡ <span>12</span></button>
-            <button class="action comment-toggle">留言 · 3</button>
-          </div>
-          <div class="comments">
-            <p>小满：这样的路，好像值得多走一会儿。</p>
-            <p>阿禾：喜欢这种不赶时间的感觉。</p>
-          </div>
-        </article>
-
-        <article class="post">
-          <div class="person">
-            <div class="avatar sand">七</div>
-            <div>
-              <div class="name">七月的风</div>
-              <div class="time">今天 · 09:18</div>
-            </div>
-          </div>
-          <p class="post-text">
-            早上给自己煮了碗热粥。窗外有点凉，
-            手心捧着碗的时候，觉得日子其实可以很简单。
-          </p>
-          <span class="tag">日常心情</span>
-          <div class="actions">
-            <button class="action like">♡ <span>8</span></button>
-            <button class="action comment-toggle">留言 · 2</button>
-          </div>
-          <div class="comments">
-            <p>南枝：热腾腾的早餐真的很治愈。</p>
-          </div>
-        </article>
-
-        <article class="post">
-          <div class="person">
-            <div class="avatar blue">禾</div>
-            <div>
-              <div class="name">阿禾</div>
-              <div class="time">昨天 · 21:06</div>
-            </div>
-          </div>
-          <p class="post-text">
-            把房间收拾了一小块出来，放上喜欢的书和杯子。
-            没有大变化，但看着舒服了很多。
-          </p>
-          <span class="tag">给生活一点空间</span>
-          <img class="post-photo"
-            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80"
-            alt="温馨的室内空间">
-          <div class="actions">
-            <button class="action like">♡ <span>16</span></button>
-            <button class="action comment-toggle">留言 · 4</button>
-          </div>
-          <div class="comments">
-            <p>林间散步：整理一点点，也会有新鲜感。</p>
-          </div>
-        </article>
-
-      </div>
+      <div class="topic-mark" aria-hidden="true">聊一聊</div>
     </section>
 
-    <!-- 侧边精选内容 -->
-    <aside class="sidebar">
+    <div class="community-layout">
 
-      <section class="side-section">
-        <div class="side-heading">岛上拾光</div>
-        <div class="pick-list">
+      <!-- 左侧：社区动态 -->
+      <section class="feed-section">
 
-          <article class="pick">
-            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=500&q=80" alt="一杯咖啡">
-            <p class="pick-title">给自己一点慢下来的时间</p>
-            <p class="pick-desc">一份平常日子的温柔</p>
-          </article>
-
-          <article class="pick">
-            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b1f?auto=format&fit=crop&w=500&q=80" alt="树木与自然光">
-            <p class="pick-title">生活里的小小发现</p>
-            <p class="pick-desc">那些值得留下的瞬间</p>
-          </article>
-
-        </div>
-        <div class="pick-note">
-          这里会慢慢收集岛上值得留下的照片、
-          句子和故事，让每一次分享都留下痕迹。
-        </div>
-      </section>
-
-      <section class="side-section">
-        <div class="side-heading">岛上的声音</div>
-        <div class="music-entry">
-          <div class="music-icon">♫</div>
+        <div class="feed-heading">
           <div>
-            <strong>今日音乐主题</strong>
-            <small>每天一份共享的声音</small>
+            <div class="section-kicker">LIFE NOTES</div>
+            <h2 class="section-title">今日呼吸记录</h2>
+            <p class="section-desc">
+              记录生活，也听听别人的生活。
+            </p>
           </div>
+          <span class="feed-count">生活的片段 · 持续更新</span>
         </div>
-        <p class="pick-desc" style="margin-top:10px">
-          音乐播放器将在后续版本接入。
-        </p>
+
+        <!-- 发布入口 -->
+        <div class="compose-box">
+          <div class="compose-avatar">岛</div>
+          <div class="compose-placeholder">今天有什么想分享的？</div>
+          <button class="compose-button" id="openPost">写一条</button>
+        </div>
+
+        <!-- 动态 1 -->
+        <article class="post-card">
+          <div class="post-user">
+            <div class="avatar">林</div>
+            <div class="user-info">
+              <span class="user-name">林间散步</span>
+              <span class="post-time">今天 · 09:42</span>
+            </div>
+          </div>
+
+          <p class="post-text">
+早上出门的时候，发现楼下那棵树又长出了新叶子。
+
+每天都从这里经过，竟然没有注意到它是什么时候变绿的。
+
+生活好像也是这样，有些变化不是突然发生的，只是我们偶尔才发现。
+          </p>
+
+          <img
+            class="post-image small"
+            src="https://images.unsplash.com/photo-1441974231531-c6227db76b1f?auto=format&fit=crop&w=900&q=80"
+            alt="阳光透过树木"
+            loading="lazy"
+          >
+
+          <div class="post-actions">
+            <button class="action-button like-button" type="button">
+              <span class="action-icon">♡</span>
+              <span class="like-count">12</span>
+            </button>
+            <button class="action-button comment-toggle" type="button">
+              <span class="action-icon">◌</span>
+              <span>留言 3</span>
+            </button>
+          </div>
+
+          <div class="comment-panel">
+            <div class="comment-list">
+              <div class="comment-item">
+                <strong>阿禾</strong>好喜欢这种不经意的小发现。
+              </div>
+              <div class="comment-item">
+                <strong>小满</strong>明天也想留意一下路边的树。
+              </div>
+              <div class="comment-item">
+                <strong>七月</strong>有时候慢一点，真的能看到很多东西。
+              </div>
+            </div>
+            <form class="comment-form">
+              <input class="comment-input" placeholder="留下一句话……" required>
+              <button class="comment-submit" type="submit">发送</button>
+            </form>
+          </div>
+        </article>
+
+        <!-- 动态 2 -->
+        <article class="post-card">
+          <div class="post-user">
+            <div class="avatar warm">七</div>
+            <div class="user-info">
+              <span class="user-name">七月的风</span>
+              <span class="post-time">今天 · 11:18</span>
+            </div>
+          </div>
+
+          <p class="post-text">
+今天中午没有点外卖，自己煮了一碗面。
+
+其实也没放什么特别的东西，就是鸡蛋、青菜和一点葱花。
+
+坐下来慢慢吃完的时候，突然觉得，认真照顾自己这件事，也可以很简单。
+          </p>
+
+          <div class="post-actions">
+            <button class="action-button like-button" type="button">
+              <span class="action-icon">♡</span>
+              <span class="like-count">8</span>
+            </button>
+            <button class="action-button comment-toggle" type="button">
+              <span class="action-icon">◌</span>
+              <span>留言 2</span>
+            </button>
+          </div>
+
+          <div class="comment-panel">
+            <div class="comment-list">
+              <div class="comment-item">
+                <strong>林间散步</strong>自己做的饭，总有一种踏实感。
+              </div>
+                <div class="comment-item">
+                <strong>小满</strong>今天也要好好吃饭。
+              </div>
+            </div>
+            <form class="comment-form">
+              <input class="comment-input" placeholder="留下一句话……" required>
+              <button class="comment-submit" type="submit">发送</button>
+            </form>
+          </div>
+        </article>
+
+        <!-- 动态 3 -->
+        <article class="post-card">
+          <div class="post-user">
+            <div class="avatar blue">禾</div>
+            <div class="user-info">
+              <span class="user-name">阿禾</span>
+              <span class="post-time">昨天 · 20:36</span>
+            </div>
+          </div>
+
+          <p class="post-text">
+最近开始重新读一本以前很喜欢的书。
+
+奇怪的是，明明还是那些文字，这次读到的地方却和以前不一样了。
+
+可能不是书变了，是读书的人已经走过了一段路。
+          </p>
+
+          <div class="post-actions">
+            <button class="action-button like-button" type="button">
+              <span class="action-icon">♡</span>
+              <span class="like-count">16</span>
+            </button>
+            <button class="action-button comment-toggle" type="button">
+              <span class="action-icon">◌</span>
+              <span>留言 4</span>
+            </button>
+          </div>
+
+          <div class="comment-panel">
+            <div class="comment-list">
+              <div class="comment-item">
+                <strong>七月的风</strong>我也有一本这样的书。
+              </div>
+              <div class="comment-item">
+                <strong>林间散步</strong>同一句话，在不同阶段会有不同的意思。
+              </div>
+            </div>
+            <form class="comment-form">
+              <input class="comment-input" placeholder="留下一句话……" required>
+              <button class="comment-submit" type="submit">发送</button>
+            </form>
+          </div>
+        </article>
+
       </section>
 
-    </aside>
+      <!-- 右侧：社区精选 -->
+      <aside class="sidebar">
+
+        <section class="side-section memory-section">
+          <div class="side-heading">
+            <h2 class="side-title">岛上拾光</h2>
+            <span class="side-en">LITTLE MOMENTS</span>
+          </div>
+
+          <div class="memory-item">
+            <img
+              class="memory-image"
+              src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=500&q=80"
+              alt="一杯咖啡"
+              loading="lazy"
+            >
+            <div>
+              <h3 class="memory-title">给自己一点慢下来的时间</h3>
+              <p class="memory-caption">一杯咖啡，一个安静的上午</p>
+            </div>
+          </div>
+
+          <div class="memory-item">
+            <img
+              class="memory-image"
+              src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=500&q=80"
+              alt="桌上的书"
+              loading="lazy"
+            >
+            <div>
+              <h3 class="memory-title">最近正在读的那本书</h3>
+              <p class="memory-caption">文字里，也有生活的回声</p>
+            </div>
+          </div>
+
+          <div class="memory-item">
+            <img
+              class="memory-image"
+              src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=500&q=80"
+              alt="温暖的室内空间"
+              loading="lazy"
+            >
+            <div>
+              <h3 class="memory-title">一个让人安心的角落</h3>
+              <p class="memory-caption">把日子过得柔软一点</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="side-section sound-card">
+          <div class="side-heading">
+            <h2 class="side-title">岛上的声音</h2>
+            <span class="side-en">SOUND OF ISLAND</span>
+          </div>
+          <p class="sound-desc">
+            每一天，分享一首歌。<br>
+            让不同的人，在同一段旋律里相遇。
+          </p>
+          <a class="sound-link" href="#" id="soundLink">
+            今日共享歌单 · 即将开启
+          </a>
+        </section>
+
+        <section class="side-section">
+          <div class="side-heading">
+            <h2 class="side-title">关于这里</h2>
+          </div>
+          <p class="sound-desc">
+            这里不需要刻意表达什么。可以分享日常、交换想法，也可以只是安静地看看别人的生活。
+          </p>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    活人呼吸岛 · 留一点空间给生活
+  </footer>
+
+  <!-- 写动态弹窗 -->
+  <div class="modal" id="postModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">写下一条呼吸记录</h2>
+        <button class="modal-close" id="closePost" type="button" aria-label="关闭">×</button>
+      </div>
+
+      <form id="postForm">
+        <input
+          class="post-name-input"
+          id="postAuthor"
+          type="text"
+          maxlength="20"
+          placeholder="给自己取个昵称"
+          required
+        >
+        <textarea
+          class="post-content-input"
+          id="postContent"
+          maxlength="1000"
+          placeholder="今天有什么想分享的？"
+          required
+        ></textarea>
+        <button class="modal-submit" type="submit">发布记录</button>
+      </form>
+
+      <p class="modal-hint">
+        当前为页面演示版本，发布内容暂时只保存在本次页面中。
+      </p>
+    </div>
   </div>
-</main>
 
-<footer class="shell">往哪里走，都是往前走。</footer>
+  <script>
+    // 写动态弹窗
+    const modal = document.getElementById("postModal");
+    const openPost = document.getElementById("openPost");
+    const closePost = document.getElementById("closePost");
+    const postForm = document.getElementById("postForm");
 
-<script>
-// 打开发帖区域
-function openWriting(){
-  const panel=document.getElementById('writePanel');
-  panel.classList.add('open');
-  panel.scrollIntoView({behavior:'smooth',block:'center'});
-  document.getElementById('postInput').focus();
-}
+    function showModal() {
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.getElementById("postAuthor").focus();
+    }
 
-document.getElementById('openWrite').addEventListener('click',openWriting);
-document.getElementById('joinTopic').addEventListener('click',openWriting);
+    function hideModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
 
-// 点赞
-function bindLike(btn){
-  btn.addEventListener('click',()=>{
-    const liked=btn.classList.toggle('liked');
-    const count=btn.querySelector('span');
-    count.textContent=Number(count.textContent)+(liked?1:-1);
-    btn.firstChild.textContent=liked?'♥ ':'♡ ';
-  });
-}
+    openPost.addEventListener("click", showModal);
+    closePost.addEventListener("click", hideModal);
 
-document.querySelectorAll('.like').forEach(bindLike);
+    modal.addEventListener("click", function(event) {
+      if (event.target === modal) {
+        hideModal();
+      }
+    });
 
-// 展开留言
-function bindComment(btn){
-  btn.addEventListener('click',()=>{
-    const box=btn.closest('.post').querySelector('.comments');
-    if(box) box.classList.toggle('open');
-  });
-}
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        hideModal();
+      }
+    });
 
-document.querySelectorAll('.comment-toggle').forEach(bindComment);
+    // 发布动态：仅当前页面有效
+    postForm.addEventListener("submit", function(event) {
+      event.preventDefault();
 
-// 新增动态：仅当前页面演示，不会保存到服务器
-document.getElementById('submitPost').addEventListener('click',()=>{
-  const input=document.getElementById('postInput');
-  const value=input.value.trim();
+      const author = document.getElementById("postAuthor").value.trim();
+      const content = document.getElementById("postContent").value.trim();
 
-  if(!value){
-    alert('先写下一点想分享的内容吧。');
-    return;
-  }
+      if (!author || !content) return;
 
-  const article=document.createElement('article');
-  article.className='post';
+      const card = document.createElement("article");
+      card.className = "post-card";
 
-  const person=document.createElement('div');
-  person.className='person';
-  person.innerHTML='<div class="avatar">你</div><div><div class="name">岛上访客</div><div class="time">刚刚</div></div>';
+      const user = document.createElement("div");
+      user.className = "post-user";
 
-  const paragraph=document.createElement('p');
-  paragraph.className='post-text';
-  paragraph.textContent=value;
+      const avatar = document.createElement("div");
+      avatar.className = "avatar";
+      avatar.textContent = author.slice(0, 1);
 
-  const tag=document.createElement('span');
-  tag.className='tag';
-  tag.textContent='生活分享';
+      const info = document.createElement("div");
+      info.className = "user-info";
 
-  const actions=document.createElement('div');
-  actions.className='actions';
-  actions.innerHTML='<button class="action like">♡ <span>0</span></button><button class="action comment-toggle">留言</button>';
+      const name = document.createElement("span");
+      name.className = "user-name";
+      name.textContent = author;
 
-  const comments=document.createElement('div');
-  comments.className='comments';
+      const time = document.createElement("span");
+      time.className = "post-time";
+      time.textContent = "刚刚";
 
-  article.append(person,paragraph,tag,actions,comments);
+      info.append(name, time);
+      user.append(avatar, info);
 
-  bindLike(actions.querySelector('.like'));
-  bindComment(actions.querySelector('.comment-toggle'));
+      const paragraph = document.createElement("p");
+      paragraph.className = "post-text";
+      paragraph.textContent = content;
 
-  document.getElementById('feed').prepend(article);
+      const actions = document.createElement("div");
+      actions.className = "post-actions";
+      actions.innerHTML = `
+        <button class="action-button like-button" type="button">
+          <span class="action-icon">♡</span>
+          <span class="like-count">0</span>
+        </button>
+        <button class="action-button comment-toggle" type="button">
+          <span class="action-icon">◌</span>
+          <span>留言 0</span>
+        </button>
+      `;
 
-  input.value='';
-  document.getElementById('writePanel').classList.remove('open');
+      const comments = document.createElement("div");
+      comments.className = "comment-panel";
+      comments.innerHTML = `
+        <div class="comment-list"></div>
+        <form class="comment-form">
+          <input class="comment-input" placeholder="留下一句话……" required>
+          <button class="comment-submit" type="submit">发送</button>
+        </form>
+      `;
 
-  article.scrollIntoView({behavior:'smooth'});
-});
-</script>
+      card.append(user, paragraph, actions, comments);
+
+      const feed = document.querySelector(".feed-section");
+      feed.insertBefore(card, feed.querySelector(".compose-box").nextSibling);
+
+      postForm.reset();
+      hideModal();
+    });
+
+    // 点赞和留言：使用事件委托，新增动态也能使用
+    document.addEventListener("click", function(event) {
+      const likeButton = event.target.closest(".like-button");
+
+      if (likeButton) {
+        const count = likeButton.querySelector(".like-count");
+        const liked = likeButton.classList.toggle("liked");
+        const current = Number(count.textContent) || 0;
+
+        count.textContent = liked ? current + 1 : Math.max(0, current - 1);
+        likeButton.querySelector(".action-icon").textContent = liked ? "♥" : "♡";
+      }
+
+      const commentButton = event.target.closest(".comment-toggle");
+
+      if (commentButton) {
+        const card = commentButton.closest(".post-card");
+        const panel = card.querySelector(".comment-panel");
+        panel.classList.toggle("open");
+      }
+    });
+
+    // 提交留言：仅当前页面有效
+    document.addEventListener("submit", function(event) {
+      if (!event.target.matches(".comment-form")) return;
+
+      event.preventDefault();
+
+      const form = event.target;
+      const input = form.querySelector(".comment-input");
+      const content = input.value.trim();
+
+      if (!content) return;
+
+      const item = document.createElement("div");
+      item.className = "comment-item";
+
+      const author = document.createElement("strong");
+      author.textContent = "岛上来客";
+
+      item.append(author, document.createTextNode(content));
+
+      const list = form.parentElement.querySelector(".comment-list");
+      list.appendChild(item);
+
+      input.value = "";
+    });
+
+    // 音乐入口暂时为占位，不跳转到不存在的页面
+    document.getElementById("soundLink").addEventListener("click", function(event) {
+      event.preventDefault();
+      alert("共享歌单功能将在后续版本开放。");
+    });
+  </script>
 
 </body>
 </html>
