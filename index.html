@@ -1,1172 +1,918 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f3f1e9">
-  <meta name="description" content="一座关于生活、选择、灵感与探索的小岛。在不断向前的世界里，允许自己按照自己的节奏生活。">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    :root {
-      --paper: #f3f1e9;
-      --white: #fbfaf6;
-      --ink: #28352e;
-      --muted: #777c72;
-      --green: #526d5b;
-      --deep-green: #304b3c;
-      --orange: #c8875d;
-      --line: rgba(48, 75, 60, .16);
-      --serif: "Noto Serif SC", serif;
-      --sans: "Noto Sans SC", sans-serif;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-weight: 400;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-    }
-
-    button, a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .top-line {
-      min-height: 34px;
-      padding: 8px 5%;
-      background: var(--deep-green);
-      color: #f5f2e9;
-      text-align: center;
-      font-size: 10px;
-      letter-spacing: 3px;
-    }
-
-    /* 导航 */
-
-    .site-header {
-      position: relative;
-      z-index: 10;
-      background: rgba(243, 241, 233, .96);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav-inner {
-      width: min(1380px, calc(100% - 80px));
-      min-height: 84px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      flex-shrink: 0;
-    }
-
-    .brand-mark {
-      width: 39px;
-      height: 39px;
-      border: 1px solid var(--green);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: var(--green);
-      font-family: var(--serif);
-      font-size: 19px;
-    }
-
-    .brand-name {
-      font-family: var(--serif);
-      font-size: 19px;
-      letter-spacing: 2px;
-      font-weight: 600;
-    }
-
-    .brand-en {
-      margin-top: 4px;
-      font-size: 8px;
-      color: var(--muted);
-      letter-spacing: 2px;
-    }
-
-    .main-nav {
-      display: flex;
-      align-items: center;
-      gap: clamp(17px, 3vw, 42px);
-      font-size: 13px;
-      color: #566157;
-    }
-
-    .main-nav a {
-      position: relative;
-      padding: 10px 0;
-      transition: color .2s;
-    }
-
-    .main-nav a:hover,
-    .main-nav a.active {
-      color: var(--orange);
-    }
-
-    .nav-note {
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    /* 首页主视觉 */
-
-    .home-hero {
-      position: relative;
-      overflow: hidden;
-      padding: 72px 0 82px;
-      background:
-        radial-gradient(ellipse at 80% 10%, rgba(179, 198, 185, .35), transparent 40%),
-        linear-gradient(125deg, #f5f2e9, #e9eee8);
-    }
-
-    .hero-inner {
-      width: min(1440px, calc(100% - 100px));
-      margin: auto;
-      display: grid;
-      grid-template-columns: .78fr 1.22fr;
-      align-items: center;
-      gap: 54px;
-    }
-
-    .hero-copy {
-      position: relative;
-      z-index: 2;
-      padding: 20px 0 20px 12px;
-    }
-
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      color: var(--green);
-      font-size: 10px;
-      letter-spacing: 4px;
-      margin-bottom: 32px;
-    }
-
-    .hero-eyebrow::before {
-      content: "";
-      width: 38px;
-      height: 1px;
-      background: var(--orange);
-    }
-
-    .hero-title {
-      margin: 0 0 28px;
-      font-family: var(--serif);
-      font-size: clamp(42px, 4.5vw, 70px);
-      line-height: 1.42;
-      font-weight: 500;
-      letter-spacing: 1px;
-      color: #29372f;
-    }
-
-    .hero-title em {
-      color: var(--green);
-      font-style: normal;
-      position: relative;
-    }
-
-    .hero-title em::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 4px;
-      width: 100%;
-      height: 9px;
-      background: rgba(200, 135, 93, .25);
-      z-index: -1;
-    }
-
-    .hero-description {
-      max-width: 430px;
-      margin: 0;
-      color: #737a70;
-      font-size: 14px;
-      line-height: 2.2;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      margin-top: 35px;
-      flex-wrap: wrap;
-    }
-
-    .primary-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 20px;
-      padding: 15px 25px;
-      color: white;
-      background: var(--deep-green);
-      font-size: 12px;
-      letter-spacing: 1px;
-      transition: .25s;
-    }
-
-    .primary-link:hover {
-      background: #243b2e;
-      transform: translateY(-3px);
-    }
-
-    .primary-link span {
-      font-size: 18px;
-    }
-
-    .secondary-link {
-      color: var(--green);
-      font-size: 12px;
-    }
-
-    .hero-visual {
-      position: relative;
-      min-width: 0;
-      height: clamp(390px, 43vw, 590px);
-      background: #dce3dc;
-      overflow: hidden;
-      box-shadow: 0 25px 65px rgba(40, 60, 46, .13);
-    }
-
-    .hero-visual img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      object-position: center;
-      transition: transform .8s ease;
-    }
-
-    .hero-visual:hover img {
-      transform: scale(1.025);
-    }
-
-    .hero-visual::after {
-      content: "主页大树.png";
-      position: absolute;
-      inset: 45% 0 0;
-      background: linear-gradient(transparent, rgba(22, 36, 28, .55));
-      pointer-events: none;
-    }
-
-    .hero-image-caption {
-      position: absolute;
-      z-index: 1;
-      bottom: 25px;
-      left: 28px;
-      color: white;
-      font-size: 10px;
-      letter-spacing: 3px;
-    }
-
-    .hero-index {
-      position: absolute;
-      top: 20px;
-      right: 22px;
-      z-index: 1;
-      color: white;
-      font-family: var(--serif);
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-shadow: 0 1px 8px rgba(0,0,0,.3);
-    }
-
-    /* 通用栏目 */
-
-    .section {
-      padding: 90px 0;
-    }
-
-    .container {
-      width: min(1200px, calc(100% - 80px));
-      margin: auto;
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 25px;
-      margin-bottom: 38px;
-    }
-
-    .section-kicker {
-      color: var(--orange);
-      font-size: 10px;
-      letter-spacing: 3px;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      margin: 0;
-      font-family: var(--serif);
-      font-size: clamp(27px, 3vw, 38px);
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
-
-    .section-subtitle {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.8;
-    }
-
-    .more-link {
-      color: var(--green);
-      font-size: 12px;
-      white-space: nowrap;
-      padding-bottom: 5px;
-    }
-
-    /* 岛上精选 */
-
-    .featured-section {
-      background: var(--white);
-    }
-
-    .featured-grid {
-      display: grid;
-      grid-template-columns: 1.35fr .85fr;
-      gap: 28px;
-    }
-
-    .feature-main {
-      position: relative;
-      min-height: 430px;
-      overflow: hidden;
-      background: #d9dfd8;
-    }
-
-    .feature-main img,
-    .feature-small img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform .6s;
-    }
-
-    .feature-main:hover img,
-    .feature-small:hover img {
-      transform: scale(1.04);
-    }
-
-    .feature-main::after,
-    .feature-small::after {
-      content: "";
-      position: absolute;
-      inset: 35% 0 0;
-      background: linear-gradient(transparent, rgba(15, 26, 20, .72));
-    }
-
-    .feature-main-copy {
-      position: absolute;
-      z-index: 1;
-      left: 32px;
-      right: 32px;
-      bottom: 30px;
-      color: white;
-    }
-
-    .feature-tag {
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: #e4c4a8;
-    }
-
-    .feature-main h3 {
-      margin: 13px 0;
-      font-family: var(--serif);
-      font-size: 27px;
-      font-weight: 500;
-    }
-
-    .feature-main p {
-      margin: 0;
-      font-size: 12px;
-      line-height: 1.8;
-      color: rgba(255,255,255,.82);
-    }
-
-    .feature-side {
-      display: grid;
-      grid-template-rows: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .feature-small {
-      position: relative;
-      min-height: 205px;
-      overflow: hidden;
-      background: #e1e4dc;
-    }
-
-    .feature-small-copy {
-      position: absolute;
-      z-index: 1;
-      left: 22px;
-      right: 20px;
-      bottom: 20px;
-      color: white;
-    }
-
-    .feature-small h3 {
-      margin: 9px 0 0;
-      font-family: var(--serif);
-      font-size: 19px;
-      font-weight: 500;
-    }
-
-    /* 本周话题 */
-
-    .topic-section {
-      background: #e9ece5;
-    }
-
-    .topic-layout {
-      display: grid;
-      grid-template-columns: .65fr 1.35fr;
-      gap: 60px;
-      align-items: start;
-    }
-
-    .topic-intro {
-      padding-top: 8px;
-    }
-
-    .topic-intro p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 2;
-    }
-
-    .topic-list {
-      border-top: 1px solid var(--line);
-    }
-
-    .topic-item {
-      display: grid;
-      grid-template-columns: 55px 1fr 25px;
-      gap: 20px;
-      align-items: center;
-      padding: 23px 0;
-      border-bottom: 1px solid var(--line);
-      transition: .2s;
-    }
-
-    .topic-number {
-      font-family: var(--serif);
-      font-size: 20px;
-      color: var(--orange);
-    }
-
-    .topic-item h3 {
-      margin: 0 0 8px;
-      font-family: var(--serif);
-      font-size: 18px;
-      font-weight: 500;
-    }
-
-    .topic-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
-    .topic-arrow {
-      color: var(--green);
-      font-size: 20px;
-    }
-
-    /* 四座岛屿 */
-
-    .islands-section {
-      background: var(--white);
-    }
-
-    .island-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 17px;
-    }
-
-    .island-card {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      background: #f1f0e9;
-      transition: transform .3s;
-    }
-
-    .island-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .island-image {
-      height: 205px;
-      overflow: hidden;
-      background: #dce3dc;
-    }
-
-    .island-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform .6s;
-    }
-
-    .island-card:hover .island-image img {
-      transform: scale(1.05);
-    }
-
-    .island-copy {
-      padding: 22px 19px 24px;
-    }
-
-    .island-en {
-      color: var(--orange);
-      font-size: 9px;
-      letter-spacing: 2px;
-    }
-
-    .island-copy h3 {
-      margin: 10px 0;
-      font-family: var(--serif);
-      font-size: 21px;
-      font-weight: 500;
-    }
-
-    .island-copy p {
-      margin: 0;
-      min-height: 45px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.9;
-    }
-
-    .island-enter {
-      display: inline-block;
-      margin-top: 18px;
-      color: var(--green);
-      font-size: 11px;
-    }
-
-    /* 岛屿寄语 */
-
-    .message-section {
-      position: relative;
-      padding: 100px 0;
-      overflow: hidden;
-      color: white;
-      background:
-        linear-gradient(rgba(30, 52, 41, .72), rgba(30, 52, 41, .78)),
-        url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2000&q=85") center 55% / cover;
-    }
-
-    .message-content {
-      width: min(900px, calc(100% - 50px));
-      margin: auto;
-      text-align: center;
-    }
-
-    .message-kicker {
-      color: #d9bd9e;
-      font-size: 10px;
-      letter-spacing: 4px;
-    }
-
-    .message-quote {
-      margin: 28px 0;
-      font-family: var(--serif);
-      font-size: clamp(28px, 4vw, 47px);
-      line-height: 1.7;
-      font-weight: 400;
-    }
-
-    .message-note {
-      color: rgba(255,255,255,.78);
-      font-size: 12px;
-      line-height: 2;
-    }
-
-    /* 页脚 */
-
-    .site-footer {
-      padding: 55px 0 28px;
-      background: #263b30;
-      color: #e8e9df;
-    }
-
-    .footer-inner {
-      width: min(1200px, calc(100% - 80px));
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      gap: 40px;
-      align-items: start;
-    }
-
-    .footer-brand {
-      font-family: var(--serif);
-      font-size: 22px;
-      letter-spacing: 3px;
-    }
-
-    .footer-description {
-      max-width: 350px;
-      margin-top: 15px;
-      color: rgba(255,255,255,.6);
-      font-size: 11px;
-      line-height: 2;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 22px;
-      font-size: 12px;
-      color: rgba(255,255,255,.8);
-    }
-
-    .footer-bottom {
-      width: min(1200px, calc(100% - 80px));
-      margin: 42px auto 0;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,.15);
-      color: rgba(255,255,255,.45);
-      font-size: 10px;
-      letter-spacing: 1px;
-    }
-
-    /* 响应式布局 */
-
-    @media (max-width: 1000px) {
-      .nav-inner {
-        width: calc(100% - 48px);
-      }
-
-      .nav-note {
-        display: none;
-      }
-
-      .hero-inner {
-        width: calc(100% - 60px);
-        grid-template-columns: .85fr 1.15fr;
-        gap: 30px;
-      }
-
-      .island-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 700px) {
-      .top-line {
-        font-size: 9px;
-        letter-spacing: 1px;
-      }
-
-      .nav-inner {
-        width: calc(100% - 36px);
-        min-height: auto;
-        padding: 18px 0 13px;
-        display: block;
-      }
-
-      .brand {
-        justify-content: center;
-      }
-
-      .main-nav {
-        justify-content: center;
-        gap: 19px;
-        margin-top: 16px;
-        overflow-x: auto;
-        white-space: nowrap;
-        font-size: 11px;
-        padding-bottom: 3px;
-      }
-
-      .hero-inner {
-        width: calc(100% - 36px);
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 28px;
-      }
-
-      .home-hero {
-        padding: 48px 0;
-      }
-
-      .hero-copy {
-        padding: 0;
-      }
-
-      .hero-eyebrow {
-        margin-bottom: 21px;
-      }
-
-      .hero-title {
-        font-size: clamp(38px, 10vw, 49px);
-        margin-bottom: 19px;
-      }
-
-      .hero-description {
-        font-size: 12px;
-      }
-
-      .hero-actions {
-        margin-top: 25px;
-      }
-
-      .hero-visual {
-        height: auto;
-        aspect-ratio: 1.15 / 1;
-      }
-
-      .container {
-        width: calc(100% - 36px);
-      }
-
-      .section {
-        padding: 65px 0;
-      }
-
-      .section-heading {
-        align-items: start;
-      }
-
-      .featured-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .feature-main {
-        min-height: 330px;
-      }
-
-      .feature-side {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 190px;
-        gap: 12px;
-      }
-
-      .feature-small {
-        min-height: 190px;
-      }
-
-      .feature-small h3 {
-        font-size: 15px;
-      }
-
-      .feature-small-copy {
-        left: 13px;
-        right: 10px;
-        bottom: 13px;
-      }
-
-      .topic-layout {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .topic-item {
-        grid-template-columns: 35px 1fr 20px;
-        gap: 12px;
-      }
-
-      .topic-item h3 {
-        font-size: 15px;
-      }
-
-      .island-grid {
-        gap: 12px;
-      }
-
-      .island-image {
-        height: 145px;
-      }
-
-      .island-copy {
-        padding: 16px 13px;
-      }
-
-      .island-copy h3 {
-        font-size: 18px;
-      }
-
-      .island-copy p {
-        font-size: 10px;
-      }
-
-      .message-section {
-        padding: 75px 0;
-      }
-
-      .footer-inner {
-        width: calc(100% - 36px);
-        flex-direction: column;
-      }
-
-      .footer-bottom {
-        width: calc(100% - 36px);
-      }
-    }
-
-    @media (max-width: 380px) {
-      .main-nav {
-        gap: 13px;
-        font-size: 10px;
-      }
-
-      .island-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .feature-side {
-        grid-template-columns: 1fr;
-        grid-template-rows: 190px 190px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>活人呼吸岛｜世界很大，生活可以慢慢来</title>
+<meta name="description" content="一座关于生活、选择、灵感与探索的岛屿。在不断向前的世界里，允许自己按照自己的节奏生活。">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap');
+
+:root {
+  --ink: #26342e;
+  --muted: #788078;
+  --paper: #f7f6f0;
+  --cream: #eeede4;
+  --green: #647d68;
+  --line: #dedfd5;
+  --orange: #c88761;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: "Noto Sans SC", sans-serif;
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+button {
+  font: inherit;
+}
+
+/* 顶部导航 */
+
+.site-header {
+  width: 100%;
+  padding: 25px 6.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(38,52,46,.1);
+}
+
+.brand {
+  font-family: "Noto Serif SC", serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.brand small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-family: sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  font-weight: 400;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 13px;
+  color: #59645c;
+}
+
+.nav a {
+  transition: color .2s;
+}
+
+.nav a:hover {
+  color: var(--orange);
+}
+
+.nav .nav-about {
+  padding: 9px 16px;
+  border: 1px solid #b9c1b7;
+  border-radius: 30px;
+}
+
+/* 页面主体 */
+
+main {
+  overflow: hidden;
+}
+
+.container {
+  width: 87%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* 首屏 */
+
+.hero {
+  min-height: 570px;
+  padding: 82px 0 76px;
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  align-items: center;
+  gap: 7%;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 12px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--green);
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(42px, 5vw, 65px);
+  line-height: 1.42;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+.hero h1 span {
+  color: var(--green);
+}
+
+.hero-desc {
+  max-width: 390px;
+  margin: 27px 0 34px;
+  color: #707970;
+  font-size: 14px;
+  line-height: 2.2;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #879487;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.hero-link span {
+  font-size: 19px;
+  transition: transform .2s;
+}
+
+.hero-link:hover span {
+  transform: translateX(5px);
+}
+
+.hero-visual {
+  position: relative;
+}
+
+.hero-image {
+  height: 390px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.hero-image-note {
+  position: absolute;
+  right: -18px;
+  bottom: -25px;
+  padding: 16px 22px;
+  background: #e9e9df;
+  color: #69756a;
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+/* 一段理念 */
+
+.intro {
+  padding: 67px 0 75px;
+  background: #eeeee6;
+}
+
+.intro-inner {
+  width: 87%;
+  max-width: 1240px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  align-items: center;
+  gap: 8%;
+}
+
+.section-label {
+  color: var(--green);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.intro h2 {
+  margin: 17px 0 0;
+  font-family: "Noto Serif SC", serif;
+  font-size: 29px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.intro-text {
+  color: #68736b;
+  font-size: 14px;
+  line-height: 2.25;
+}
+
+/* 精选内容 */
+
+.section {
+  padding: 100px 0;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.section-heading h2 {
+  margin: 10px 0 0;
+  font-family: "Noto Serif SC", serif;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1.12fr .88fr;
+  gap: 7%;
+  align-items: center;
+}
+
+.feature-main {
+  position: relative;
+}
+
+.feature-main img {
+  height: 350px;
+}
+
+.feature-main .article-info {
+  padding: 22px 0 0;
+}
+
+.article-type {
+  color: var(--orange);
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.article-title {
+  margin: 12px 0 10px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.article-desc {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2;
+}
+
+.feature-side {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.side-article {
+  display: grid;
+  grid-template-columns: 125px 1fr;
+  gap: 19px;
+  align-items: center;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.side-article img {
+  height: 112px;
+}
+
+.side-article h3 {
+  margin: 8px 0;
+  font-family: "Noto Serif SC", serif;
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.side-article p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* 四座岛 */
+
+.islands {
+  padding: 88px 0 100px;
+  background: #e9ece5;
+}
+
+.islands-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 45px;
+}
+
+.islands-intro h2 {
+  margin: 12px 0 0;
+  font-family: "Noto Serif SC", serif;
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.islands-intro p {
+  color: #788078;
+  font-size: 13px;
+  line-height: 2;
+}
+
+.island-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.island-card {
+  min-height: 245px;
+  padding: 25px 22px;
+  background: rgba(255,255,255,.53);
+  transition: transform .25s, background .25s;
+}
+
+.island-card:hover {
+  transform: translateY(-5px);
+  background: #fff;
+}
+
+.island-number {
+  color: #a0aa9e;
+  font-family: Georgia, serif;
+  font-size: 13px;
+}
+
+.island-symbol {
+  margin: 22px 0 17px;
+  color: var(--green);
+  font-family: "Noto Serif SC", serif;
+  font-size: 25px;
+}
+
+.island-card h3 {
+  margin: 0 0 11px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.island-card p {
+  min-height: 43px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.island-card a {
+  display: inline-block;
+  margin-top: 17px;
+  color: var(--green);
+  font-size: 12px;
+}
+
+/* 世界真有趣 */
+
+.discover {
+  padding: 100px 0;
+}
+
+.discover-layout {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 8%;
+  align-items: center;
+}
+
+.discover-copy h2 {
+  margin: 15px 0 18px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 33px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.discover-copy p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2.2;
+}
+
+.discover-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: end;
+}
+
+.discover-images img:first-child {
+  height: 245px;
+}
+
+.discover-images img:last-child {
+  height: 185px;
+  margin-bottom: 28px;
+}
+
+/* 寄语 */
+
+.closing {
+  padding: 92px 20px 96px;
+  text-align: center;
+  background: #eae9e0;
+}
+
+.closing .small-line {
+  width: 35px;
+  height: 1px;
+  margin: 0 auto 29px;
+  background: #9ca697;
+}
+
+.closing p {
+  margin: 0;
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(25px, 3.4vw, 38px);
+  letter-spacing: 3px;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.closing small {
+  display: block;
+  margin-top: 22px;
+  color: #879087;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+/* 页脚 */
+
+footer {
+  padding: 35px 6.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #899087;
+  font-size: 11px;
+}
+
+.footer-brand {
+  color: var(--ink);
+  font-family: "Noto Serif SC", serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+/* 移动端 */
+
+@media (max-width: 760px) {
+  .site-header {
+    padding: 20px 6%;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .nav {
+    width: 100%;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .nav .nav-about {
+    padding: 6px 12px;
+  }
+
+  .container,
+  .intro-inner {
+    width: 88%;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 55px 0 65px;
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .hero-image {
+    height: 260px;
+  }
+
+  .hero-image-note {
+    right: -8px;
+    bottom: -18px;
+    padding: 12px 15px;
+    font-size: 11px;
+  }
+
+  .intro {
+    padding: 52px 0;
+  }
+
+  .intro-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .intro h2 {
+    font-size: 25px;
+  }
+
+  .section {
+    padding: 70px 0;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-heading h2,
+  .islands-intro h2 {
+    font-size: 27px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .feature-main img {
+    height: 245px;
+  }
+
+  .side-article {
+    grid-template-columns: 105px 1fr;
+    gap: 14px;
+  }
+
+  .side-article img {
+    height: 95px;
+  }
+
+  .islands {
+    padding: 68px 0;
+  }
+
+  .islands-intro {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .island-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .island-card {
+    min-height: 220px;
+    padding: 19px 15px;
+  }
+
+  .island-symbol {
+    margin: 18px 0 12px;
+  }
+
+  .discover-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .discover-copy h2 {
+    font-size: 28px;
+  }
+
+  .discover-images img:first-child {
+    height: 190px;
+  }
+
+  .discover-images img:last-child {
+    height: 145px;
+  }
+
+  .closing {
+    padding: 70px 18px;
+  }
+
+  .closing p {
+    font-size: 25px;
+    letter-spacing: 1px;
+  }
+
+  footer {
+    padding: 28px 6%;
+    gap: 15px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="top-line">
-    世界可以很快，但你不必一直很赶。
-  </div>
+<header class="site-header">
+  <a href="index.html" class="brand">
+    活人呼吸岛
+    <small>AN ISLAND FOR THE LIVING</small>
+  </a>
 
-  <header class="site-header">
-    <div class="nav-inner">
+  <nav class="nav">
+    <a href="index.html">首页</a>
+    <a href="explore.html">内容岛</a>
+    <a href="discussion.html">社区岛</a>
+    <a href="ai-tools.html">工具岛</a>
+    <a href="lab.html">创意岛</a>
+    <a href="about.html" class="nav-about">关于这座岛</a>
+  </nav>
+</header>
 
-      <a class="brand" href="index.html">
-        <div class="brand-mark">岛</div>
-        <div>
-          <div class="brand-name">活人呼吸岛</div>
-          <div class="brand-en">A PLACE TO BREATHE</div>
+<main>
+
+  <!-- 首屏 -->
+  <section class="hero container">
+    <div class="hero-copy">
+      <div class="eyebrow">WELCOME TO THE ISLAND</div>
+
+      <h1>
+        世界很大，<br>
+        <span>生活可以</span><br>
+        慢慢来。
+      </h1>
+
+      <p class="hero-desc">
+        这里是一座可以自由探索的小岛。<br>
+        有故事，有想法，有工具，也有生活里那些值得发现的小事。<br>
+        不必赶路，按照自己的兴趣走走看看。
+      </p>
+
+      <a href="explore.html" class="hero-link">
+        从这里开始探索 <span>→</span>
+      </a>
+    </div>
+
+    <div class="hero-visual">
+      <img
+        class="hero-image"
+        src="https://images.unsplash.com/photo-1694453067595-d50711f89890?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=1600"
+        alt="海面与绿色岛屿的航拍景色"
+      >
+      <div class="hero-image-note">给生活留一点空间</div>
+    </div>
+  </section>
+
+  <!-- 理念 -->
+  <section class="intro">
+    <div class="intro-inner">
+      <div>
+        <div class="section-label">A DIFFERENT RHYTHM</div>
+        <h2>不是每一步，<br>都需要走得很快。</h2>
+      </div>
+
+      <div class="intro-text">
+        我们生活在一个不断向前的世界。新的技术、新的机会、新的目标，
+        好像总在提醒我们还可以更快一点、再努力一点。
+
+        <br><br>
+
+        但生活不只有一种节奏。有人正在出发，有人正在转弯，
+        有人想停下来看看风景，也有人还在寻找自己的方向。
+
+        <br><br>
+
+        这里不规定你应该成为什么样的人。你可以阅读、交流、发现工具，
+        也可以只是随意逛逛。
+      </div>
+    </div>
+  </section>
+
+  <!-- 精选内容 -->
+  <section class="section container">
+    <div class="section-heading">
+      <div>
+        <div class="section-label">ISLAND JOURNAL · 01</div>
+        <h2>岛上最近发生的事</h2>
+      </div>
+      <p>一些值得阅读、值得想想的内容</p>
+    </div>
+
+    <div class="feature-grid">
+      <a href="explore.html" class="feature-main">
+        <img
+          src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80"
+          alt="湖泊、山峦与自然风景"
+        >
+        <div class="article-info">
+          <div class="article-type">慢一点也没关系</div>
+          <h3 class="article-title">生活不是一场永远不能暂停的比赛</h3>
+          <div class="article-desc">
+            有时候，重新整理生活，也是一种向前。
+          </div>
         </div>
       </a>
 
-      <nav class="main-nav">
-        <a class="active" href="index.html">首页</a>
-        <a href="explore.html">内容岛</a>
-        <a href="discussion.html">社区岛</a>
-        <a href="ai-tools.html">工具岛</a>
-        <a href="lab.html">创意岛</a>
-        <a href="about.html">关于这座岛</a>
-      </nav>
-
-      <div class="nav-note">EXPLORE AT YOUR OWN PACE</div>
-
-    </div>
-  </header>
-
-  <main>
-
-    <!-- 首页主视觉 -->
-
-    <section class="home-hero">
-      <div class="hero-inner">
-
-        <div class="hero-copy">
-
-          <div class="hero-eyebrow">
-            A PLACE TO BREATHE
-          </div>
-
-          <h1 class="hero-title">
-            世界很大，<br>
-            不必一直赶路。<br>
-            给自己留一座<em>岛。</em>
-          </h1>
-
-          <p class="hero-description">
-            这里不催促你变得更好，也不要求你永远向前。
-            可以探索、交流、学习，也可以什么都不做。
-            重要的是，按照自己的节奏生活。
-          </p>
-
-          <div class="hero-actions">
-            <a class="primary-link" href="explore.html">
-              开始探索这座岛 <span>→</span>
-            </a>
-            <a class="secondary-link" href="about.html">
-              认识我们 ↗
-            </a>
-          </div>
-
-        </div>
-
-        <div class="hero-visual">
-          <img src="1111.jpg" alt="活人呼吸岛主视觉">
-          <div class="hero-index">ISLAND No.001</div>
-          <div class="hero-image-caption">
-            HUOREN BREATHING ISLAND · FIND YOUR OWN PACE
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 岛上精选 -->
-
-    <section class="section featured-section">
-      <div class="container">
-
-        <div class="section-heading">
+      <div class="feature-side">
+        <a href="explore.html" class="side-article">
+          <img
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=500&q=80"
+            alt="阳光照进安静的空间"
+          >
           <div>
-            <div class="section-kicker">SELECTED STORIES</div>
-            <h2 class="section-title">岛上精选</h2>
-            <div class="section-subtitle">
-              一些值得停留的故事、想法和生活片段。
-            </div>
+            <div class="article-type">人生可以转弯</div>
+            <h3>如果现在的路不适合你呢？</h3>
+            <p>关于改变、选择与重新开始。</p>
           </div>
-          <a class="more-link" href="explore.html">探索更多 →</a>
-        </div>
+        </a>
 
-        <div class="featured-grid">
-
-          <a class="feature-main" href="explore.html">
-            <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85" alt="自然风景">
-            <div class="feature-main-copy">
-              <div class="feature-tag">LIFE · PERSPECTIVE</div>
-              <h3>人生不是一条只能向前冲的直线</h3>
-              <p>有时停下来，有时绕个弯，也是在认真地生活。</p>
-            </div>
-          </a>
-
-          <div class="feature-side">
-
-            <a class="feature-small" href="explore.html">
-              <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=800&q=85" alt="咖啡馆">
-              <div class="feature-small-copy">
-                <div class="feature-tag">DAILY LIFE</div>
-                <h3>给普通日子一点新鲜感</h3>
-              </div>
-            </a>
-
-            <a class="feature-small" href="explore.html">
-              <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=85" alt="工作空间">
-              <div class="feature-small-copy">
-                <div class="feature-tag">NEW IDEAS</div>
-                <h3>换个角度，看看熟悉的世界</h3>
-              </div>
-            </a>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 本周话题 -->
-
-    <section class="section topic-section">
-      <div class="container">
-
-        <div class="topic-layout">
-
-          <div class="topic-intro">
-            <div class="section-kicker">THIS WEEK</div>
-            <h2 class="section-title">本周话题</h2>
-            <p>
-              不必有标准答案。<br>
-              分享你的经历、想法，<br>
-              或者只是说说最近的发现。
-            </p>
-            <a class="more-link" href="discussion.html">进入社区岛 →</a>
-          </div>
-
-          <div class="topic-list">
-
-            <a class="topic-item" href="discussion.html">
-              <div class="topic-number">01</div>
-              <div>
-                <h3>如果暂时不考虑别人的期待，你想怎样生活？</h3>
-                <p>关于选择、自由，以及那些还没来得及实现的念头。</p>
-              </div>
-              <div class="topic-arrow">↗</div>
-            </a>
-
-            <a class="topic-item" href="discussion.html">
-              <div class="topic-number">02</div>
-              <div>
-                <h3>最近有没有一件小事，让你觉得生活还挺有意思？</h3>
-                <p>不一定是什么大事，微小的快乐也值得被记录。</p>
-              </div>
-              <div class="topic-arrow">↗</div>
-            </a>
-
-            <a class="topic-item" href="discussion.html">
-              <div class="topic-number">03</div>
-              <div>
-                <h3>你有没有过一次，突然决定换条路走？</h3>
-                <p>那些转弯、尝试，以及后来才明白的事情。</p>
-              </div>
-              <div class="topic-arrow">↗</div>
-            </a>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 四座岛屿 -->
-
-    <section class="section islands-section">
-      <div class="container">
-
-        <div class="section-heading">
+        <a href="explore.html" class="side-article">
+          <img
+            src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=500&q=80"
+            alt="自然生长的花朵"
+          >
           <div>
-            <div class="section-kicker">EXPLORE THE ISLAND</div>
-            <h2 class="section-title">四座岛屿，四种探索方式</h2>
-            <div class="section-subtitle">
-              这里很自由，你可以按照自己的兴趣，决定今天想在岛上做什么。
-            </div>
+            <div class="article-type">世界真有趣</div>
+            <h3>生活里还有很多新鲜事</h3>
+            <p>保持好奇，去看看更大的世界。</p>
           </div>
-        </div>
+        </a>
 
-        <div class="island-grid">
-
-          <a class="island-card" href="explore.html">
-            <div class="island-image">
-              <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=700&q=85" alt="书籍与阅读">
-            </div>
-            <div class="island-copy">
-              <div class="island-en">STORIES & IDEAS</div>
-              <h3>内容岛</h3>
-              <p>故事、观点、生活观察，以及值得慢慢读的内容。</p>
-              <span class="island-enter">去岛上看看 →</span>
-            </div>
-          </a>
-
-          <a class="island-card" href="discussion.html">
-            <div class="island-image">
-              <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=700&q=85" alt="朋友交流">
-            </div>
-            <div class="island-copy">
-              <div class="island-en">PEOPLE & CONNECTION</div>
-              <h3>社区岛</h3>
-              <p>遇见有趣的人，交换想法，聊聊生活中的各种可能。</p>
-              <span class="island-enter">去岛上看看 →</span>
-            </div>
-          </a>
-
-          <a class="island-card" href="ai-tools.html">
-            <div class="island-image">
-              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=85" alt="数字工具">
-            </div>
-            <div class="island-copy">
-              <div class="island-en">TOOLS & POSSIBILITIES</div>
-              <h3>工具岛</h3>
-              <p>AI 工具、效率应用与实用资源，让想法更容易落地。</p>
-              <span class="island-enter">去岛上看看 →</span>
-            </div>
-          </a>
-
-          <a class="island-card" href="lab.html">
-            <div class="island-image">
-              <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=85" alt="创意与手作">
-            </div>
-            <div class="island-copy">
-              <div class="island-en">CREATIVITY & EXPERIMENTS</div>
-              <h3>创意岛</h3>
-              <p>灵感、实验、作品和脑洞，给好奇心留一点空间。</p>
-              <span class="island-enter">去岛上看看 →</span>
-            </div>
-          </a>
-
-        </div>
-
+        <a href="explore.html" class="side-article">
+          <img
+            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80"
+            alt="人物生活肖像"
+          >
+          <div>
+            <div class="article-type">不完美俱乐部</div>
+            <h3>普通人的生活，也值得被记录</h3>
+            <p>不必完美，也可以很有意思。</p>
+          </div>
+        </a>
       </div>
-    </section>
-
-    <!-- 岛屿寄语 -->
-
-    <section class="message-section">
-      <div class="message-content">
-        <div class="message-kicker">A NOTE FROM THE ISLAND</div>
-        <div class="message-quote">
-          人向哪儿走，<br>
-          都是向前走。
-        </div>
-        <div class="message-note">
-          不必永远奔跑，也不必按照同一张地图生活。<br>
-          愿你有选择方向的勇气，也有按照自己节奏生活的自由。
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-
-    <div class="footer-inner">
-
-      <div>
-        <div class="footer-brand">活人呼吸岛</div>
-        <div class="footer-description">
-          一座关于生活、选择、灵感与探索的小岛。<br>
-          世界可以很快，但你不必一直很赶。
-        </div>
-      </div>
-
-      <div class="footer-links">
-        <a href="index.html">首页</a>
-        <a href="explore.html">内容岛</a>
-        <a href="discussion.html">社区岛</a>
-        <a href="ai-tools.html">工具岛</a>
-        <a href="lab.html">创意岛</a>
-        <a href="about.html">关于这座岛</a>
-      </div>
-
     </div>
+  </section>
 
-    <div class="footer-bottom">
-      © 2026 HUOREN BREATHING ISLAND · MADE WITH CURIOSITY AND FREEDOM
+  <!-- 四座岛 -->
+  <section class="islands">
+    <div class="container">
+      <div class="islands-intro">
+        <div>
+          <div class="section-label">EXPLORE THE ISLAND</div>
+          <h2>四座岛，四种探索方式</h2>
+        </div>
+        <p>
+          这里很自由。<br>
+          你可以按照自己的兴趣，决定今天想去哪里。
+        </p>
+      </div>
+
+      <div class="island-grid">
+
+        <article class="island-card">
+          <div class="island-number">01 / STORIES</div>
+          <div class="island-symbol">文 · 故事</div>
+          <h3>内容岛</h3>
+          <p>读故事、看观点，发现生活的另一种可能。</p>
+          <a href="explore.html">去岛上看看 →</a>
+        </article>
+
+        <article class="island-card">
+          <div class="island-number">02 / PEOPLE</div>
+          <div class="island-symbol">人 · 相遇</div>
+          <h3>社区岛</h3>
+          <p>聊聊生活，分享经历，遇见有趣的人。</p>
+          <a href="discussion.html">去岛上看看 →</a>
+        </article>
+
+        <article class="island-card">
+          <div class="island-number">03 / TOOLS</div>
+          <div class="island-symbol">器 · 工具</div>
+          <h3>工具岛</h3>
+          <p>发现实用工具，让生活和工作更轻松。</p>
+          <a href="ai-tools.html">去岛上看看 →</a>
+        </article>
+
+        <article class="island-card">
+          <div class="island-number">04 / IDEAS</div>
+          <div class="island-symbol">想 · 创意</div>
+          <h3>创意岛</h3>
+          <p>脑洞、实验、灵感，以及还没实现的点子。</p>
+          <a href="lab.html">去岛上看看 →</a>
+        </article>
+
+      </div>
     </div>
+  </section>
 
-  </footer>
+  <!-- 发现世界 -->
+  <section class="discover container">
+    <div class="discover-layout">
+      <div class="discover-copy">
+        <div class="section-label">KEEP CURIOUS</div>
+        <h2>生活不只有<br>眼前的那条路。</h2>
+        <p>
+          一个新发现、一段陌生的故事、一个奇妙的想法，
+          都可能让我们重新认识熟悉的世界。
+          <br><br>
+          保持一点好奇心，世界就会多出很多入口。
+        </p>
+        <a href="explore.html" class="hero-link">
+          去发现更多 <span>→</span>
+        </a>
+      </div>
+
+      <div class="discover-images">
+        <img
+          src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80"
+          alt="清晨阳光与自然景色"
+        >
+        <img
+          src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80"
+          alt="充满生活气息的空间"
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- 结尾 -->
+  <section class="closing">
+    <div class="small-line"></div>
+    <p>人向哪儿走，都是向前走。</p>
+    <small>TAKE YOUR TIME · FIND YOUR WAY</small>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">活人呼吸岛</div>
+  <div>世界可以很快，但你不必一直很赶。</div>
+  <div>© 2026 活人呼吸岛</div>
+</footer>
 
 </body>
 </html>
