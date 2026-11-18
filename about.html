@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="关于活人呼吸岛：一座关于生活、探索、创造与连接的岛屿。">
+  <title>关于制作岛｜活人呼吸岛</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #f7f6f0;
+      color: #303c32;
+      font-family: "PingFang SC", "Microsoft YaHei",
+                   sans-serif;
+      line-height: 1.8;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .nav {
+      height: 76px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e7e7dc;
+      background: rgba(247,246,240,.96);
+    }
+
+    .logo {
+      font-family: Georgia, serif;
+      font-size: 21px;
+      letter-spacing: 1px;
+      color: #385342;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 29px;
+      align-items: center;
+      font-size: 14px;
+      color: #687469;
+    }
+
+    .nav-links a {
+      transition: color .2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #385c43;
+    }
+
+    .nav-links a.active {
+      border-bottom: 1px solid #66866b;
+      padding-bottom: 5px;
+    }
+
+    .container {
+      width: min(1000px, 86%);
+      margin: auto;
+    }
+
+    .hero {
+      padding: 115px 0 100px;
+      border-bottom: 1px solid #e6e6da;
+    }
+
+    .eyebrow {
+      color: #81917d;
+      font-size: 12px;
+      letter-spacing: 3px;
+      margin-bottom: 27px;
+    }
+
+    h1 {
+      font-family: Georgia, "Songti SC", serif;
+      font-size: clamp(38px, 6vw, 62px);
+      line-height: 1.35;
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin: 0 0 28px;
+      color: #344c39;
+    }
+
+    .hero-desc {
+      max-width: 570px;
+      font-size: 16px;
+      color: #747d72;
+      line-height: 2.1;
+    }
+
+    .hero-index {
+      margin-top: 55px;
+      color: #a0a697;
+      font-family: Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    section {
+      padding: 85px 0;
+      border-bottom: 1px solid #e6e6da;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 30px;
+      margin-bottom: 38px;
+    }
+
+    .number {
+      color: #91a18b;
+      font-family: Georgia, serif;
+      font-size: 26px;
+    }
+
+    h2 {
+      font-family: Georgia, "Songti SC", serif;
+      font-weight: 400;
+      font-size: 29px;
+      color: #3c5542;
+      margin: 0;
+    }
+
+    .section-content {
+      padding-left: 120px;
+      max-width: 790px;
+    }
+
+    .section-content p {
+      font-size: 15px;
+      color: #687267;
+      margin: 0 0 19px;
+      line-height: 2.15;
+    }
+
+    .islands {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 36px;
+    }
+
+    .island-card {
+      padding: 25px 27px;
+      background: #eeefe7;
+      border: 1px solid #e5e8dd;
+      transition: transform .25s, background .25s;
+    }
+
+    .island-card:hover {
+      transform: translateY(-3px);
+      background: #e9ede3;
+    }
+
+    .island-card .en {
+      color: #96a38e;
+      font-family: Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .island-card h3 {
+      color: #405844;
+      font-size: 18px;
+      font-weight: 500;
+      margin: 0 0 8px;
+    }
+
+    .island-card p {
+      font-size: 13px;
+      line-height: 1.9;
+      margin: 0;
+      color: #778073;
+    }
+
+    .beliefs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px 50px;
+      margin-top: 10px;
+    }
+
+    .belief-item {
+      border-top: 1px solid #dfe3d8;
+      padding-top: 18px;
+    }
+
+    .belief-item h3 {
+      font-weight: 500;
+      font-size: 17px;
+      color: #49604b;
+      margin: 0 0 10px;
+    }
+
+    .belief-item p {
+      font-size: 14px;
+      color: #788174;
+      line-height: 2;
+      margin: 0;
+    }
+
+    .promise {
+      background: #edf0e7;
+      padding: 28px 32px;
+      margin-top: 20px;
+    }
+
+    .promise p {
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+
+    .promise p:last-child {
+      margin-bottom: 0;
+    }
+
+    .ending {
+      text-align: center;
+      padding: 110px 20px 120px;
+    }
+
+    .ending .small {
+      font-family: Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: #95a18f;
+      margin-bottom: 25px;
+    }
+
+    .ending h2 {
+      font-size: clamp(25px, 4vw, 38px);
+      line-height: 1.7;
+      color: #425a45;
+      letter-spacing: 2px;
+    }
+
+    .ending p {
+      color: #939b8f;
+      font-size: 13px;
+      margin-top: 22px;
+    }
+
+    footer {
+      padding: 28px 7%;
+      border-top: 1px solid #e6e6da;
+      display: flex;
+      justify-content: space-between;
+      color: #9a9f94;
+      font-size: 12px;
+    }
+
+    @media (max-width: 700px) {
+      .nav {
+        height: auto;
+        min-height: 68px;
+        padding: 17px 6%;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-links {
+        width: 100%;
+        gap: 19px;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 5px;
+        font-size: 13px;
+      }
+
+      .container {
+        width: 88%;
+      }
+
+      .hero {
+        padding: 78px 0 65px;
+      }
+
+      section {
+        padding: 65px 0;
+      }
+
+      .section-heading {
+        grid-template-columns: 48px 1fr;
+        gap: 12px;
+      }
+
+      .section-content {
+        padding-left: 60px;
+      }
+
+      .islands,
+      .beliefs {
+        grid-template-columns: 1fr;
+      }
+
+      h2 {
+        font-size: 25px;
+      }
+
+      .ending {
+        padding: 80px 15px;
+      }
+
+      footer {
+        gap: 10px;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">活人呼吸岛</a>
+
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="content.html">内容岛</a>
+      <a href="discussion.html">社区岛</a>
+      <a href="tools.html">工具岛</a>
+      <a href="creative.html">创意岛</a>
+      <a href="about.html" class="active">关于制作岛</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="container">
+
+      <header class="hero">
+        <div class="eyebrow">ABOUT THIS ISLAND · 关于这座岛</div>
+
+        <h1>一座岛，<br>一个关于生活的想象。</h1>
+
+        <div class="hero-desc">
+          这里没有标准答案，也不急着给生活下定义。
+          <br>
+          我们只是想留出一片地方，让好奇心有处安放，
+          让想法能够生长，让人与人之间重新发生连接。
+        </div>
+
+        <div class="hero-index">AN ISLAND FOR THE LIVING</div>
+      </header>
+
+      <section>
+        <div class="section-heading">
+          <div class="number">01</div>
+          <h2>为什么有这座岛？</h2>
+        </div>
+
+        <div class="section-content">
+          <p>
+            生活有时候很忙，信息很多，选择也很多。
+            我们每天都在接收、处理、判断，却不一定有时间
+            好好感受自己真正关心的事情。
+          </p>
+
+          <p>
+            我们希望有这样一座岛。
+            它不只是一个网站，也不只是一个内容集合。
+            它更像一个可以随时回来的地方。
+          </p>
+
+          <p>
+            可以在这里发现新知识，遇见有趣的人，
+            找到解决问题的工具，也可以把脑海里那些
+            尚未成形的想法慢慢变成现实。
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <div class="number">02</div>
+          <h2>这是一座什么样的岛？</h2>
+        </div>
+
+        <div class="section-content">
+          <p>
+            我们把这座岛想象成一个由不同区域组成的小小世界。
+            每个区域都有自己的性格，却又彼此连接。
+          </p>
+
+          <div class="islands">
+
+            <div class="island-card">
+              <div class="en">CONTENT ISLAND</div>
+              <h3>内容岛</h3>
+              <p>
+                收集知识、观察世界、打开视野。
+                让值得了解的信息，变得更容易接近。
+              </p>
+            </div>
+
+            <div class="island-card">
+              <div class="en">COMMUNITY ISLAND</div>
+              <h3>社区岛</h3>
+              <p>
+                分享真实经历，交换不同想法。
+                让有趣的人彼此遇见。
+              </p>
+            </div>
+
+            <div class="island-card">
+              <div class="en">TOOLS ISLAND</div>
+              <h3>工具岛</h3>
+              <p>
+                发现实用工具，探索新的方法。
+                让想做的事情，有更好的实现路径。
+              </p>
+            </div>
+
+            <div class="island-card">
+              <div class="en">CREATIVE ISLAND</div>
+              <h3>创意岛</h3>
+              <p>
+                容纳灵感、实验和各种奇思妙想。
+                让还没有答案的事情，也有机会发生。
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <div class="number">03</div>
+          <h2>我们相信的事情</h2>
+        </div>
+
+        <div class="section-content">
+          <div class="beliefs">
+
+            <div class="belief-item">
+              <h3>保持好奇</h3>
+              <p>
+                世界很大，值得了解的事情很多。
+                不因为熟悉而停止探索。
+              </p>
+            </div>
+
+            <div class="belief-item">
+              <h3>尊重不同</h3>
+              <p>
+                不同的经历会带来不同的答案。
+                不必急着判断，也不必强求一致。
+              </p>
+            </div>
+
+            <div class="belief-item">
+              <h3>重视真实</h3>
+              <p>
+                比起完美的表达，我们更在意真实的经历、
+                真诚的交流和具体的行动。
+              </p>
+            </div>
+
+            <div class="belief-item">
+              <h3>持续创造</h3>
+              <p>
+                想法不应该只停留在想象里。
+                每一次尝试，都可能让生活多一种可能。
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <div class="number">04</div>
+          <h2>岛上的小小约定</h2>
+        </div>
+
+        <div class="section-content">
+          <p>
+            这座岛还在生长，也欢迎更多人参与其中。
+          </p>
+
+          <div class="promise">
+            <p>保持开放，不给好奇心设限。</p>
+            <p>尊重彼此，不要求所有人拥有相同答案。</p>
+            <p>分享有价值的内容，也分享真实的生活。</p>
+            <p>允许尝试，允许犯错，也允许不断改变。</p>
+          </div>
+
+          <p style="margin-top:25px;">
+            我们不期待这里一开始就什么都有。
+            一座岛的样子，本来就是由一次次相遇、
+            一点点积累慢慢形成的。
+          </p>
+        </div>
+      </section>
+
+      <div class="ending">
+        <div class="small">KEEP EXPLORING</div>
+
+        <h2>往哪里走，<br>都是往前走。</h2>
+
+        <p>活人呼吸岛 · 一座仍在生长的岛</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <span>© 2026 活人呼吸岛</span>
+    <span>保持好奇，保持呼吸，保持向前。</span>
+  </footer>
+
+</body>
+</html>
